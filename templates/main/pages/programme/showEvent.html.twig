@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evènements{% endblock %}
+
+{% block body %}
+    <h1>Evènement</h1>
+
+    <table class="table">
+        <tbody>
+                        
+            <th>Titre</th>
+                <td>{{ occasion.title }}</td>
+            </tr>
+            <tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ occasion.description }}</td>
+            </tr>
+            <tr>
+                <th>Date de début de l'évènement</th>
+                <td>{{ occasion.startDate ? occasion.startDate|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin de l'évènement</th>
+                <td>{{ occasion.endDate ? occasion.endDate|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+    <a href="{{ path('admin_occasion_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('calendrier') }}">Retour au calendrier</a>
+
+    <a href="{{ path('admin_occasion_edit', {'id': occasion.id}) }}">Modifier l'évènement</a>
+
+    {{ include('admin/occasion/deleteOccasion.html.twig') }}
+    {% else %}
+    
+    <a href="{{ path('calendrier') }}">Retour au calendrier</a>
+
+    {% endif %}
+
+{% endblock %}

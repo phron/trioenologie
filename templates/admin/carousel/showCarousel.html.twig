@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carousel{% endblock %}
+
+{% block body %}
+    <h1>Carousel n°{{ carousel.id }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID de l'image</th>
+                <td>{{ carousel.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset("uploads/carousel/" ~ carousel.img) }}" alt="" style="width:350px"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_carousel') }}">Retour au carousel</a>
+
+    <a href="{{ path('admin_carousel_edit', {'id': carousel.id}) }}">Modifier l'image</a>
+
+    {{ include('admin/carousel/deleteCarousel.html.twig') }}
+{% endblock %}

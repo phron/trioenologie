@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>Profile</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>LastName</th>
+                <td>{{ profile.lastName }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ profile.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ profile.address }}</td>
+            </tr>
+            <tr>
+                <th>Address2</th>
+                <td>{{ profile.address2 }}</td>
+            </tr>
+            <tr>
+                <th>Zipcode</th>
+                <td>{{ profile.zipcode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ profile.city }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_user_index') }}">Retour à la liste des utilisateurs</a>
+
+    <a href="{{ path('admin_profile_edit', {'id': profile.id}) }}">edit</a>
+
+    {{ include('admin/user/profile/deleteProfile.html.twig') }}
+{% endblock %}

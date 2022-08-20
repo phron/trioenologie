@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carousel Trioenologie{% endblock %}
+
+{% block body %}
+    <h1>Carousel</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carousel in carousels %}
+            <tr>
+                <td>{{ carousel.id }}</td>
+                <td><img src="{{ asset("uploads/carousel/" ~ carousel.img) }}" alt="" style="width:350px"></td>
+                <td>
+                    <a href="{{ path('admin_carousel_show', {'id': carousel.id}) }}">show</a>
+                    <a href="{{ path('admin_carousel_edit', {'id': carousel.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Pas de résultats</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_carousel_new') }}">Nouvelle image</a>
+{% endblock %}

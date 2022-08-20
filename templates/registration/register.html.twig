@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    {# <h1>Créer un compte</h1>
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }} #}
+
+<section >
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">     
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <img src="/assets/imagesTrioenologie/trioenologie-trans5.png" alt="Verre de vin de couleur noir et  avec typographie Trioenologie au dessus" class="mb-2 mt-3" width="130" height="130"> 
+
+            <h1 class="sP mb-4 mt-3">S'inscire</h3>
+
+        {{ form_start(registrationForm) }}
+
+            <div class="form-outline mb-4">
+            {{ form_row(registrationForm.email) }}
+            </div>
+
+            <div class="form-outline mb-4">
+            {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+            </div>         
+
+            <div class="form-outline mb-4">
+            {{ form_row(registrationForm.agreeTerms) }} 
+            </div>         
+
+            <button type="submit" class="btn btn-lg btn-return mb-3 col-6">Créer un compte</button>
+        {{ form_end(registrationForm) }}
+
+            <hr class="my-4">
+
+            <h2 class="sP mb-4">Déjà membre?</h2>
+            <a href="{{ path('login') }}" class="btn btn-lg btn-return mb-3 col-6">Se connecter</a>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

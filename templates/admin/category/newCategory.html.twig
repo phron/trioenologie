@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle catégorie{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="text-center">Ajouter une catégorie</h1>
+
+    {{ form_start(form) }}
+
+    <div class="row justify-content-center">
+    
+        <div class="col-4 text-center mt-2">
+            {{ form_row(form.name) }}    
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center mt-3">
+
+        <div class="col-2 text-center mt-2">
+            {{ form_row(form.bgColor) }}
+        </div>
+        <div class="col-2 text-center mt-2">
+            {{ form_row(form.bdColor) }}
+        </div>
+        <div class="col-2 text-center mt-2">
+            {{ form_row(form.textColor) }}
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <div class="row justify-content-between mt-3">
+    
+        <a href="{{ path('admin_categories') }}" class="btn btn-return col-3">Retour à la liste des catégories</a>
+        <button class="btn btn-submit col-3">{{ button_label|default('Valider') }}</button>
+        <a href="{{ path('admin_dashboard') }}" class="btn btn-return col-3">Retour au dashboard</a>
+    
+    </div>
+    {{ form_end(form) }}
+
+
+</div>
+{% endblock %}

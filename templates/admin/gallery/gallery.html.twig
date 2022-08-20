@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gallery index{% endblock %}
+
+{% block body %}
+    <h1>Gallery index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ImgTitle</th>
+                <th>ImgDesc</th>
+                <th>CreatedAt</th>
+                <th>EndAt</th>
+                <th>Img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gallery in galleries %}
+            <tr>
+                <td>{{ gallery.id }}</td>
+                <td>{{ gallery.imgTitle }}</td>
+                <td>{{ gallery.imgDesc }}</td>
+                <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i') : '' }}</td>
+                <td><img src="{{ asset("uploads/gallery/" ~ gallery.img) }}" alt="" style="width:350px"></td>
+                <td>
+                    <a href="{{ path('admin_gallery_show', {'id': gallery.id}) }}">Voir l'image</a>
+                    <a href="{{ path('admin_gallery_edit', {'id': gallery.id}) }}">Modifier l'image</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_gallery_new') }}">Create new</a>
+{% endblock %}

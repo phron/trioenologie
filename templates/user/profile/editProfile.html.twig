@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block body %}
+    <h1>Modifier le profil</h1>
+    
+    <button class="btn btn-submit" type="submit">Valider</button>
+    {{ include('user/profile/formProfile.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('user_profile') }}" class="btn btn-return col-4">Retour au profil</a>
+
+    {{ include('user/profile/deleteProfile.html.twig') }}
+{% endblock %}

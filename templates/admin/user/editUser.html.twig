@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Edit User</h1>
+
+    {{ include('admin/user/formUser.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
+
+    {{ include('admin/user/deleteUser.html.twig') }}
+{% endblock %}

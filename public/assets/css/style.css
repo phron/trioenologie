@@ -1,0 +1,339 @@
+/* TELECHARGEMENT POLICE TRIOENOLOGIE */
+@font-face {
+    font-family: 'Bondi Sans DEMO Rough';
+    src: url('/public/assets/fonts/BondiSans-Rough.ttf') format('truetype');
+}
+
+/* FIN POLICES */
+
+/* BARRE DE NAVIGATION */
+
+/* Background barre de navigation */
+.navbar{
+    background-color: #7b0539;
+}
+
+/* Modification liens barre de navigation */
+.navbar a {
+    font-family: 'Square Peg';
+    font-size: 2rem;
+    color: #eea1aa !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+/* Taille image navbar brand */
+
+.navbar a img.imgNav{
+    width:10.5rem;
+}
+
+/* Liste éléments centre nav */
+#ul1{
+     margin-left: auto; 
+     margin-right:auto
+}
+
+/* Taille logo utilisateur connecté */
+
+.navbar a img.imgUser{
+    width: 3rem;
+}
+
+/* TOGGLER ICON NAVBAR */
+
+.navbar-toggler{
+    color: #eea1aa !important;
+    border: rgb(238, 161, 170) solid;
+}
+
+.navbar-toggler-icon{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(238,161,170)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); 
+}
+
+/* Menu de droite */
+
+
+/* FIN NAVBAR */
+
+/* BODY */
+
+/* Redimension du body */
+
+body {
+    /* padding-top: 160px; */
+    padding-top: 90px;
+    padding-bottom: 100px;
+    height: 100%;
+}
+
+/* Taille des titres */
+
+/* h1 {
+    font-family: 'Square Peg';
+    color: black;
+    font-size: 5.5rem;
+} */
+
+/* Police des elements div */
+
+/* CLASSE POLICE SQUARE PEG */
+
+.sP {
+    font-family: 'Square Peg';
+}
+
+h1.sP {
+    font-family: 'Square Peg';
+    font-size: 4.3rem;
+}
+
+h2.sP {
+    font-family: 'Square Peg';
+    font-size: 3.5rem;
+}
+
+h3.sP {
+    font-family: 'Square Peg';
+    font-size: 2.8rem;
+}
+
+
+
+div {
+    font-family: 'Roboto Flex';
+    font-size: 17.5px;
+}
+
+/* FIN BODY */
+
+/* PAGE D'ACCUEIL */
+
+/* Modification bannière page d'accueil */
+#banniere{
+    aspect-ratio: 30/9;
+    object-fit: contain;
+    
+}
+
+/* Police titre page d'accueil */
+.titre {
+    font-family: 'Bondi Sans DEMO Rough';
+    font-size: 6rem;
+    color: #7b0539;}
+
+/* FIN PAGE D'ACCUEIL */
+
+/* CALENDRIER */
+
+/* Taille calendrier */
+
+#calendar-holder{    
+    margin-top: 3rem;
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+#calendar{
+    padding-top: 3rem;
+    margin-bottom: 40px;
+}
+
+/* Légende couleurs évènements */
+
+h2.colorsCalendar {
+    font-family: 'Roboto Flex';
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 50%;
+}
+
+.colorsCalendarRose{
+    background-color: #eea1aa;
+}
+.colorsCalendarSaumon{
+    background-color: #f1a38d;
+}
+.colorsCalendarBordeaux{
+    background-color: #7b0539;
+}
+
+/* Carré current day */
+
+td.fc-today{
+    background-color: rgba(241, 163, 141, 0.3) !important;
+}
+
+td.fc-day-top.fc-mon.fc-today {
+    background-color: rgba(241, 163, 141, 0) !important;
+
+}
+
+/* Boutons */
+.fc-button-primary{
+    background-color: #7b0539 !important;
+}
+
+/* FIN CALENDRIER */
+
+/* FORMULAIRES */
+
+/* Boutons formulaires */
+.btn-primary {
+    color: white !important;
+    background-color: black;
+    border-color: black;
+}
+
+.btn-update {
+    border: rgb(238, 161, 170);
+    background-color: rgba(238, 161, 170, 0.6) ;
+    color: white;
+}
+
+.btn-update:hover {    
+    color: white;
+    background-color: #eea1aa;
+}
+
+.btn-return{
+    border: #7b073d;
+    background-color: #7b073d;
+    color: white;
+}
+
+.btn-return:hover{
+    color: white;
+    background-color: #550729;
+}
+
+.btn-submit{
+    background-color: #da1d53;
+    color: white;
+}
+
+.btn-submit:hover{
+    
+    background-color: rgba(218, 29, 83, 0.4);
+    color: white;    
+
+}
+
+.btn-submitForm{
+    color: white;
+    background-color: rgba(71, 120, 71, 0.663);
+}
+
+.btn-submitForm:hover{
+    color: white;
+    background-color: rgba(59, 99, 59, 0.663);
+}
+
+/* FIN FORMULAIRES */
+
+/* DASHBOARD */
+
+.btns{
+    margin: 0.3rem;
+    width: 25rem;
+    height: 7.5rem;
+    line-height: 7.5rem;
+}
+
+.btn-article{
+    background-color: #550729;
+    color: white;
+}
+.btn-galerie{
+    background-color: #7b073d;
+    color: white;
+}
+.btn-evenements{
+    background-color: #bc0052;
+    color: white;
+}
+.btn-categories{
+    background-color: #eea1aa;
+    color:#550729;
+}
+.btn-users{
+    background-color:#f1a38d;
+    color: #550729;
+}
+.btn-carousel{
+    background-color: #cd8a78;
+    color: #550729;
+}
+
+/* PROFIL */
+
+/* Titres */
+h1.profil, h2.profil{
+    font-family: 'Reenie Beanie';
+    font-size: 4rem !important;
+}
+
+/* Contenu du profil */
+.profilContent{
+    font-family: 'Reenie Beanie';
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: 1rem;
+}
+
+.profileInfos{
+    font-family: 'Roboto Flex';
+    font-size: 1rem;
+    font-style: italic;
+}
+
+/* FIN PROFIL */
+
+/* ARTICLES */
+
+/* Titres des articles */
+.artTitle{
+    font-family: 'Square Peg';
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+/* Date de parution */
+
+#pDate{
+    font-size: 0.8rem;
+}
+h1.welcomeSize{
+    font-size: 45px;
+}
+.welcome{
+    color: #7b0539;
+}
+
+/* FIN ARTICLES */
+
+/* FOOTER */
+
+footer { 
+    background-color: #7b0539; 
+    font-family: 'Square Peg';
+    font-size: 1.4rem;
+    color: #eea1aa !important;
+    position: absolute;
+    bottom: 0;
+}
+
+/* FIN FOOTER */
+
+.carousel {
+    width: 400px;
+}
+
+.form-signin{
+    padding: 15px;
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
+}

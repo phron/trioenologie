@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h1>Ajouter un article</h1>
+
+    {{ form_start(formArticle) }}
+
+        <div class="row justify-content-center text-center">
+        
+            <div class="col-6 mt-2">            
+                {{ form_row(formArticle.title)}}            
+            </div>
+            <div class="col-12 mt-2">            
+                {{ form_row(formArticle.intro)}}            
+            </div>        
+            <div class="col-12 mt-2">            
+                {{ form_row(formArticle.content)}}            
+            </div>
+            <div class="col-7 mt-2">            
+                {{ form_row(formArticle.img)}}            
+            </div>            
+            <div class="col-6 mt-2">            
+                {{ form_row(formArticle.author)}}            
+            </div>
+        <button class="btn">{{ button_label|default('Save') }}</button>
+            
+        </div>
+
+    {{ form_end(formArticle) }}
+
+        <div class="row justify-content-center text-center">
+
+            <a href="{{ path('admin_article_index') }}" class="btn btn-primary mt-2 col-4">Retour aux articles</a>
+
+        </div>
+
+</div>
+{% endblock %}
+

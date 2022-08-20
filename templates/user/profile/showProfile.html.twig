@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+{% if app.user %}
+
+<div class="container">
+
+    <section class="shadow">
+    
+        <div class="row justify-content-center text-center profilContent">
+
+            <h1 class="text-center profil">Informations du profil</h1>
+
+        </div>
+
+        <div class="row justify-content-center text-center profilContent">
+        
+            <h2 class="col-4 profilContent">Nom</h3>
+            <h2 class="col-4 profilContent">Prénom</h3>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profileInfos">
+        
+            <p class="col-4">{{profile.firstName}}</p>
+            <p class="col-4">{{profile.lastName}}</p>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profilContent">
+        
+            <h3 class="col-4 profilContent">Email</h3>
+            <h3 class="col-4 profilContent">Téléphone</h3>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profileInfos">
+        
+            <p class="col-4">{{app.user.email}}</p>
+            <p class="col-4">{{profile.city}}</p>
+        
+        </div>
+        
+        <div class="row justify-content-center text-center profilContent">
+        
+            <h3 class="col-4 profilContent">Adresse postale</h3>
+            <h3 class="col-4 profilContent">Adresse complémentaire</h3>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profileInfos">
+        
+            <p class="col-4">{{profile.address}}</p>
+            <p class="col-4">{{profile.address2}}</p>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profilContent">
+        
+            <h3 class="col-4 profilContent">Code postal</h3>
+            <h3 class="col-4 profilContent">Ville</h3>
+        
+        </div>
+
+        <div class="row justify-content-center text-center profileInfos">
+        
+            <p class="col-4">{{profile.zipcode}}</p>
+            <p class="col-4">{{profile.city}}</p>
+        
+        </div>
+
+        <br>
+
+        <div class="row justify-content-center text-center profileInfos">
+
+            <a href="{{ path('user_profile_edit', {'id': profile.id}) }}" class="btn btn-update col-4">Modifier le profil</a>
+
+            <form method="post" action="{{ path('user_profile_delete', {'id': profile.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer votre profil? Ceci entrainera par défaut la suppression de votre compte.');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ profile.id) }}">
+                <button class="btn">Supprimer le profil</button>
+            </form>
+
+        </div>
+
+        <br><br>
+
+    </section>
+
+</div>
+
+
+{% endif %}
+
+    {# VOIR AJOUTER RESET PROFILE #}
+{% endblock %}

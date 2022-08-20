@@ -1,0 +1,20 @@
+    <div id="carouselExampleFade" class="carousel slide carousel-fade mx-auto mt-3" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for key, carousel in carousels %}
+            <div class=" carousel-item {% if key == 0 %} active {% endif %}">
+
+            {# Il faut activer la premiere image du tableau pour remplacer la balise item-active #}
+
+                <img src="{{ asset('uploads/carousel/' ~ carousel.img) }}" class="d-block w-100 imgCarousel" alt="Carousel des différentes images du site Trioenologie">
+            </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Précédente</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Suivante</span>
+    </button>
+    </div>

@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Galerie photo{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <section class="row justify-content-center">
+            
+        <div class="col lg-6 col-md-6 col-sm-4 shadow text-center">
+
+            <h1 class="text-center">{{ gallery.imgTitle }}</h1>
+            
+            <p>{{ gallery.imgDesc }}</p>
+            <p>{{ gallery.createdAt|date('Y-m-d H:i') }}</p>
+            <img src="{{ asset('uploads/gallery/' ~ gallery.img) }}" style="width:350px">
+            <p>{{ gallery.endAt|date('Y-m-d H:i') }}</p>   
+
+        </div>
+
+    </section>
+    
+    <div class="row justify-content-center">
+    
+        <a href="{{ path('galerie') }}" class="btn btn-primary col-6">Retour à la galerie photo</a>
+
+    </div>
+    
+</div>
+
+
+{% endblock %}

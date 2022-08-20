@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Occasion{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'évènement</h1>
+
+    {{ include('admin/occasion/formOccasion.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('admin_occasion_index') }}">back to list</a>
+
+    {{ include('admin/occasion/deleteOccasion.html.twig') }}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Evènements{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center">Tous les évènements</h1>
+
+    <div class="container">
+    
+        <section class="row justify-content-between">
+                
+            {% for occasion in occasions %}
+                <div class="col lg-6 col-md-6 col-sm-4 shadow text-center">
+
+                    
+                    <h2>{{ occasion.title }}</h2>
+                    <p>{{ occasion.description }}</p>
+                    <p>{{ occasion.startDate|date('Y-m-d H:i:s') }}</p>
+                    <p>{{ occasion.endDate|date('Y-m-d H:i:s') }}</p>          
+            
+                </div>
+            {% endfor %}
+    
+    </div>
+
+
+{% endblock %}

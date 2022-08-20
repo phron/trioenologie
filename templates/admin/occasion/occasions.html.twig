@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Occasion index{% endblock %}
+
+{% block body %}
+    <h1>Occasion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Catégorie</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Max participants</th>
+                <th>Min participants</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for occasion in occasions %}
+            <tr>
+                <td>{{ occasion.id }}</td>
+                <td>{{ occasion.category.name }}</td>
+                <td>{{ occasion.title }}</td>
+                <td>{{ occasion.description }}</td>
+                <td>{{ occasion.startDate ? occasion.startDate|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ occasion.endDate ? occasion.endDate|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ occasion.minParts }}</td>
+                <td>{{ occasion.maxParts }}</td>
+                <td>
+                    <a href="{{ path('admin_occasion_show', {'id': occasion.id}) }}">Voir</a>
+                    <a href="{{ path('admin_occasion_edit', {'id': occasion.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun résultat.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_occasion_new') }}">Nouvel évènement</a>
+{% endblock %}

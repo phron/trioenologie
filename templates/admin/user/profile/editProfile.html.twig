@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+    <h1>Edit Profile</h1>
+
+    {{ include('admin/user/profile/formProfile.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_user_index') }}">Retour à la liste des utilisateurs</a>
+
+    {{ include('admin/user/profile/deleteProfile.html.twig') }}
+{% endblock %}

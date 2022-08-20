@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle image{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une image au carousel</h1>
+
+    {{ include('editor/carousel/formCarousel.html.twig') }}
+
+    <a href="{{ path('editor_carousel') }}">Retour au carousel</a>
+{% endblock %}

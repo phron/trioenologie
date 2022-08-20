@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}">Retour au back-office</a>
+
+    <a href="{{ path('admin_user_edit', {'id': user.id}) }}">Modifier l'utilisateur</a>
+
+    {{ include('admin/user/deleteUser.html.twig') }}
+{% endblock %}

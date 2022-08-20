@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block body %}
+    <h1>Gallery</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gallery.id }}</td>
+            </tr>
+            <tr>
+                <th>ImgTitle</th>
+                <td>{{ gallery.imgTitle }}</td>
+            </tr>
+            <tr>
+                <th>ImgDesc</th>
+                <td>{{ gallery.imgDesc }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndAt</th>
+                <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Img</th>
+                <td><img src="{{ asset("uploads/gallery/" ~ gallery.img) }}" alt="" style="width:350px"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_gallery_index') }}">Retour à la galerie photo</a>
+
+    <a href="{{ path('admin_gallery_edit', {'id': gallery.id}) }}">Modifier l'image</a>
+
+    {{ include('admin/gallery/deleteGallery.html.twig') }}
+{% endblock %}
