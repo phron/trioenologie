@@ -1,11 +1,6 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Carousel Trioenologie{% endblock %}
 
-{% block body %}
-    <h1>Carousel</h1>
-
-    <table class="table">
+    {# <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -17,7 +12,13 @@
         {% for carousel in carousels %}
             <tr>
                 <td>{{ carousel.id }}</td>
-                <td><img src="{{ asset("uploads/carousel/" ~ carousel.img) }}" alt="" style="width:350px"></td>
+            {% for picture in carousel.pictures %}
+                    <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="180px">     
+            {% else %}
+            <tr>
+                <td colspan="3">Pas de résultats</td>
+            </tr>
+            {% endfor %}
                 <td>
                     <a href="{{ path('admin_carousel_show', {'id': carousel.id}) }}">show</a>
                     <a href="{{ path('admin_carousel_edit', {'id': carousel.id}) }}">edit</a>
@@ -29,7 +30,49 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table> #}
 
-    <a href="{{ path('admin_carousel_new') }}">Nouvelle image</a>
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Carousel Trioenologie{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Carousel</h1>
+{% for carousel in carousels %}
+<div class="row">
+
+    <div class="col-4">ID</div>
+    <div class="col-4">Image</div>
+    <div class="col-4">Actions</div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-4">{{ carousel.id }}</div>
+    {% for picture in carousel.pictures %}    
+    <div class="col-4">            
+        <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="180px">     
+    </div>
+    {% endfor %}
+    <div class="col-4">
+        <a href="{{ path('admin_carousel_show', {'id': carousel.id}) }}">show</a>
+        <a href="{{ path('admin_carousel_edit', {'id': carousel.id}) }}">edit</a>
+    </div>
+
+</div>
+
+{% endfor %}
+
+    <br><br>
+
+    <a href="{{ path('admin_carousel_new') }}" class="btn btn-submitForm">Nouvelle image</a>
+
 {% endblock %}
+
+
+{# </div> #}

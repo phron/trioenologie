@@ -21,8 +21,11 @@
                 {{ form_row(formArticle.content)}}            
             </div>
             <div class="col-7 mt-2">            
-                {{ form_row(formArticle.img)}}            
-            </div>            
+                {{ form_row(formArticle.pictures)}}            
+            </div>           
+            <div class="col-7 mt-2">            
+                {{ form_row(formArticle.savedPictures)}}            
+            </div>         
             <div class="col-6 mt-2">            
                 {{ form_row(formArticle.author)}}            
             </div>
@@ -40,4 +43,10 @@
 
 </div>
 {% endblock %}
-
+{% block javascripts %}
+<script>
+    $('#article_savedPicture').change(function(){
+        alert('changed !');
+    })
+</script>
+{% endblock  %}

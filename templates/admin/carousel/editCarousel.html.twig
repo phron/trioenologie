@@ -7,7 +7,7 @@
 
     {{ include('admin/carousel/formCarousel.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('admin_carousel') }}">Retour au carousel</a>
+    <a href="{{ path('admin_carousel') }}" class="btn btn-return">Retour au carousel</a>
 
     {{ include('admin/carousel/deleteCarousel.html.twig') }}
 {% endblock %}

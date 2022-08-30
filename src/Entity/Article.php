@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,15 +28,16 @@ class Article
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $img = null;
-
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $author = null;
+
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'articles', cascade:['persist'])]
+    private Collection $pictures;
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,17 +93,6 @@ class Article
         return $this;
     }
 
-    public function getImg(): ?string
-    {
-        return $this->img;
-    }
-
-    public function setImg(?string $img): self
-    {
-        $this->img = $img;
-
-        return $this;
-    }
 
     public function getAuthor(): ?string
     {
@@ -112,5 +104,34 @@ class Article
         $this->author = $author;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        $this->pictures->removeElement($picture);
+
+        return $this;
+    }
+
+    public function getSavedPictures(): Collection
+    {
+        return $this->pictures;
     }
 }

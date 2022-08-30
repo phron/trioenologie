@@ -187,34 +187,34 @@ td.fc-day-top.fc-mon.fc-today {
     border-color: black;
 }
 
-.btn-update {
+.btn-return {
     border: rgb(238, 161, 170);
     background-color: rgba(238, 161, 170, 0.6) ;
     color: white;
 }
 
-.btn-update:hover {    
+.btn-return:hover {    
     color: white;
     background-color: #eea1aa;
 }
 
-.btn-return{
+.btn-update{
     border: #7b073d;
     background-color: #7b073d;
     color: white;
 }
 
-.btn-return:hover{
+.btn-update:hover{
     color: white;
     background-color: #550729;
 }
 
-.btn-submit{
+.btn-delete:hover{
     background-color: #da1d53;
     color: white;
 }
 
-.btn-submit:hover{
+.btn-delete{
     
     background-color: rgba(218, 29, 83, 0.4);
     color: white;    

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
@@ -30,6 +32,18 @@ class Picture
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $legend = null;
+
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'pictures')]
+    private Collection $articles;
+
+    #[ORM\ManyToMany(targetEntity: Carousel::class, mappedBy: 'pictures')]
+    private Collection $carousels;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+        $this->carousels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +118,60 @@ class Picture
     public function setLegend(?string $legend): self
     {
         $this->legend = $legend;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->addPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            $article->removePicture($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Carousel>
+     */
+    public function getCarousels(): Collection
+    {
+        return $this->carousels;
+    }
+
+    public function addCarousel(Carousel $carousel): self
+    {
+        if (!$this->carousels->contains($carousel)) {
+            $this->carousels->add($carousel);
+            $carousel->addPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarousel(Carousel $carousel): self
+    {
+        if ($this->carousels->removeElement($carousel)) {
+            $carousel->removePicture($this);
+        }
 
         return $this;
     }

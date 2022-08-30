@@ -4,8 +4,10 @@
             <div class=" carousel-item {% if key == 0 %} active {% endif %}">
 
             {# Il faut activer la premiere image du tableau pour remplacer la balise item-active #}
+            {% for picture in carousel.pictures %}
+                <img src="{{ asset('uploads/pictures/' ~ picture.pictureFile) }}" class="d-block w-100 imgCarousel" alt="Carousel des différentes images du site Trioenologie">
+            {% endfor %}
 
-                <img src="{{ asset('uploads/carousel/' ~ carousel.img) }}" class="d-block w-100 imgCarousel" alt="Carousel des différentes images du site Trioenologie">
             </div>
         {% endfor %}
     </div>

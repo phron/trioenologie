@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use DateTimeImmutable;
 use App\Entity\Article;
+use App\Entity\Picture;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,29 +32,53 @@ class AdminArticleController extends AbstractController
         EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article, ['add' => true]);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article->setCreatedAt(new DateTimeImmutable('now'));         
-            $imgArticleFile = $form->get('img')->getData();
+            // on récupère les images transmises dans le champ d'upload (pictures)
+            $pictures = $form->get('pictures')->getData();
+            
+            // on boucle sur les images uploadées
+            foreach($pictures as $picture){
+                // on attribue un nom de fichier unique à l'image téléchargée
+                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+                
+                //on récupère le nom de fichier original de l'image
+                $name = $picture->getClientOriginalName();
+                
+                // on enregistre l'image dans le répertoire uploads/pictures (image physique)
+                $picture->move(
+                    $this->getParameter('pictures_directory'),
+                    $nomPict
+                ); // EO move  
 
+                // on enregistre l'image en BDD table Picture (ses infos)
+                $pict = new Picture();
+                $pict->setTitle($name); 
+                $pict->setPictureFile($nomPict);
 
-            if($imgArticleFile)
-            {
-                $nomImgArticle = date('YmdHis') . "-" . uniqid() . "." . $imgArticleFile->getClientOriginalExtension();
+                // on enregistre l'image dans l'article
+                $article -> addPicture($pict);               
+            } // EO foreach $pictures
 
-                $imgArticleFile->move(
-                    $this->getParameter('articles_directory'),
-                    $nomImgArticle
-                );
+            // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+            $images =  $form->get('savedPictures')->getData();
+            
+            // on boucle sur les images du champ savedPictures 
+            foreach($images as $image){
+                // on ajoute chaque image sélectionnée à l'article
+                $article -> addPicture($image);
+            }//EO foreach $images
 
-                $article->setImg($nomImgArticle);
-            }
-
+            // On enregistre l'article 
+            // qui va sauvegarder définitivement en bdd les images uploadées et créer les liens dans la table de jointure
+            // grâce au 'cascade:['persist] ajouté dans la déclaration de la relation (cf Entity/Article))
             $entityManager->persist($article);
             $entityManager->flush();
             $articleRepository->add($article, true);
+
 
             return $this->redirectToRoute('admin_article_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,31 +101,24 @@ class AdminArticleController extends AbstractController
     public function editArticle(
         Request $request, 
         Article $article, 
-        ArticleRepository $articleRepository, 
-        EntityManagerInterface $entityManager): Response
+        ArticleRepository $articleRepository): Response
     {
-        $form = $this->createForm(ArticleType::class, $article, ['update' => true]);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+        // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+        $images =  $form->get('savedPictures')->getData();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $imgArticleFile = $form->get('imgUpdate')->getData();
 
-
-            if($imgArticleFile)
-            {
-                $nomImgArticle = date('YmdHis') . "-" . uniqid() . "." . $imgArticleFile->getClientOriginalExtension();
-
-                $imgArticleFile->move(
-                    $this->getParameter('articles_directory'),
-                    $nomImgArticle
-                );
-
-                $article->setImg($nomImgArticle);
-            }
-
-            $entityManager->persist($article);
-            $entityManager->flush();
+            // on boucle sur les images du champ savedPictures 
+            foreach($images as $image){
+            // on ajoute chaque image sélectionnée à l'article
+            $article -> addPicture($image);
+        }
             $articleRepository->add($article, true);
+
+
 
             return $this->redirectToRoute('admin_article_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -108,6 +127,32 @@ class AdminArticleController extends AbstractController
             'article' => $article,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/edit/{article_id}/unlinkPicture/{id}', name: 'unlinkPicture', methods: ['GET','DELETE'])]
+    public function unlinkPicture(
+        $article_id, 
+        $id, 
+        Request $request, 
+        ArticleRepository $articleRepository, 
+        PictureRepository $pictureRepository, 
+        EntityManagerInterface $entityManager ): Response
+    {
+        $article = $articleRepository->find($article_id);
+        $picture = $pictureRepository->find($id);
+        $article->removePicture($picture);
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+       
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        
+        return $this->renderForm('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]

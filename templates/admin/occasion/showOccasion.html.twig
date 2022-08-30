@@ -3,6 +3,7 @@
 {% block title %}Evènements{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Evènement</h1>
 
     <table class="table">
@@ -13,7 +14,7 @@
             </tr>
             <tr>
                 <th>Catégorie</th>
-                <td>{{ occasion.category }}</td>
+                <td>{{ occasion.category.name }}</td>
             </tr>
             <tr>
                 <th>Titre</th>
@@ -24,27 +25,29 @@
                 <td>{{ occasion.description }}</td>
             </tr>
             <tr>
-                <th>Text</th>
-                <td>{{ occasion.textColor }}</td>
-            </tr>            
+            <th>Nb de participants minimum</th>
+                <td>{{ occasion.minParts }}</td>
+            </tr>
             <tr>
-                <th>Bordure</th>
-                <td>{{ occasion.borderColor }}</td>
+            <th>Nb de participants max</th>
+                <td>{{ occasion.maxParts }}</td>
             </tr>
             <tr>
                 <th>Date de début</th>
-                <td>{{ occasion.startDate ? occasion.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ occasion.startDate ? occasion.startDate|date('d-m-Y H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>Date de fin</th>
-                <td>{{ occasion.endDate ? occasion.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ occasion.endDate ? occasion.endDate|date('d-m-Y H:i') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('admin_occasion_index') }}">Retour à la liste</a>
+    <a href="{{ path('admin_occasion_index') }}" class="btn btn-return col-3">Retour à la liste</a>
 
-    <a href="{{ path('admin_occasion_edit', {'id': occasion.id}) }}">Modifier l'évènement</a>
+    <a href="{{ path('admin_occasion_edit', {'id': occasion.id}) }}" class="btn btn-update col-3">Modifier l'évènement</a>
 
     {{ include('admin/occasion/deleteOccasion.html.twig') }}
+
+</div>
 {% endblock %}

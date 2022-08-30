@@ -2,14 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Picture;
 use App\Entity\Carousel;
 use App\Form\CarouselType;
+use App\Repository\PictureRepository;
 use App\Repository\CarouselRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/carousel', name:'admin_')]
 class AdminCarouselController extends AbstractController
@@ -29,24 +31,48 @@ class AdminCarouselController extends AbstractController
         EntityManagerInterface $entityManager): Response
     {
         $carousel = new Carousel();
-        $form = $this->createForm(CarouselType::class, $carousel, ['add' => true]);
+        $form = $this->createForm(CarouselType::class, $carousel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {  
-            $imgCarouselFile = $form->get('img')->getData();
+            // on récupère les images transmises dans le champ d'upload (pictures)
+            $pictures = $form->get('pictures')->getData();
+            
+            // on boucle sur les images uploadées
+            foreach($pictures as $picture){
+                // on attribue un nom de fichier unique à l'image téléchargée
+                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+                
+                //on récupère le nom de fichier original de l'image
+                $name = $picture->getClientOriginalName();
+                
+                // on enregistre l'image dans le répertoire uploads/pictures (image physique)
+                $picture->move(
+                    $this->getParameter('pictures_directory'),
+                    $nomPict
+                ); // EO move  
 
+                // on enregistre l'image en BDD table Picture (ses infos)
+                $pict = new Picture();
+                $pict->setTitle($name); 
+                $pict->setPictureFile($nomPict);
 
-            if($imgCarouselFile)
-            {
-                $nomImgCarousel = date('YmdHis') . "-" . uniqid() . "." . $imgCarouselFile->getClientOriginalExtension();
+                // on enregistre l'image dans l'article
+                $carousel -> addPicture($pict);               
+            } // EO foreach $pictures
 
-                $imgCarouselFile->move(
-                    $this->getParameter('carousel_directory'),
-                    $nomImgCarousel
-                );
+            // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+            $images =  $form->get('savedPictures')->getData();
+            
+            // on boucle sur les images du champ savedPictures 
+            foreach($images as $image){
+                // on ajoute chaque image sélectionnée à l'article
+                $carousel -> addPicture($image);
+            }//EO foreach $images
 
-                $carousel->setImg($nomImgCarousel);
-            }
+            // On enregistre l'article 
+            // qui va sauvegarder définitivement en bdd les images uploadées et créer les liens dans la table de jointure
+            // grâce au 'cascade:['persist] aj
 
             $entityManager->persist($carousel);
             $entityManager->flush();
@@ -76,23 +102,18 @@ class AdminCarouselController extends AbstractController
         CarouselRepository $carouselRepository, 
         EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CarouselType::class, $carousel, ['update' => true]);
+        $form = $this->createForm(CarouselType::class, $carousel);
         $form->handleRequest($request);
+        // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+        $images =  $form->get('savedPictures')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imgCarouselFile = $form->get('imgUpdate')->getData();
 
-
-            if($imgCarouselFile)
-            {
-                $nomImgCarousel= date('YmdHis') . "-" . uniqid() . "." . $imgCarouselFile->getClientOriginalExtension();
-
-                $imgCarouselFile->move(
-                    $this->getParameter('carousel_directory'),
-                    $nomImgCarousel                );
-
-                $carousel->setImg($nomImgCarousel);
-            }
+            // on boucle sur les images du champ savedPictures 
+            foreach($images as $image){
+            // on ajoute chaque image sélectionnée à l'article
+            $carousel -> addPicture($image);
+        }
 
             $entityManager->persist($carousel);
             $entityManager->flush();
@@ -106,6 +127,34 @@ class AdminCarouselController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/edit/{carousel_id}/unlinkPicture/{id}', name: 'carousel_unlinkPicture', methods: ['GET','DELETE'])]
+    public function unlinkPicture(
+        $carousel_id, 
+        $id, 
+        Request $request, 
+        CarouselRepository $carouselRepository, 
+        PictureRepository $pictureRepository, 
+        EntityManagerInterface $entityManager ): Response
+    {
+        $carousel = $carouselRepository->find($carousel_id);
+        $picture = $pictureRepository->find($id);
+        $carousel->removePicture($picture);
+
+        $entityManager->persist($carousel);
+        $entityManager->flush();
+       
+        $form = $this->createForm(CarouselType::class, $carousel);
+        $form->handleRequest($request);
+        
+        return $this->renderForm('admin/carousel/editCarousel.html.twig', [
+            'carousel' => $carousel,
+            'form' => $form,
+        ]);
+
+    }
+
+
 
     #[Route('/{id}', name: 'carousel_delete', methods: ['POST'])]
     public function deleteCarousel(

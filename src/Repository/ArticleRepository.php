@@ -39,6 +39,31 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+       /**
+    * @return Article[] Returns an array of Article objects
+    */
+   public function findByPicture($value): array
+   {
+       return $this->createQueryBuilder('a')
+           ->andWhere('a.pictures = :val')
+           ->setParameter('val', $value)
+           ->orderBy('a.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+   
+   public function findOneById($value): ?Article
+   {
+       return $this->createQueryBuilder('a')
+           ->andWhere('a.id = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */
