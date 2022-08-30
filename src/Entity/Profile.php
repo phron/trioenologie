@@ -19,6 +19,9 @@ class Profile
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $firstName = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $phoneNumber = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
@@ -37,6 +40,12 @@ class Profile
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'profiles')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Status $status = null;
+
+
 
     public function getId(): ?int
     {
@@ -63,6 +72,18 @@ class Profile
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
@@ -138,4 +159,18 @@ class Profile
 
         return $this;
     }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+
 }

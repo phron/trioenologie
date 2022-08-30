@@ -32,9 +32,18 @@
                 <td>{{ profile.city }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
+                <th>Date de modification</th>
                 <td>{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i') : '' }}</td>
             </tr>
+            <tr>            
+                <th>Statut du membre</th>
+            {% if profile.status %}
+                <td>{{ profile.status.name }}</td>
+            {% else %}  
+                <td class="fst-italic">Statut non-renseigné</td>            
+            </tr>
+            {% endif %}
+
         </tbody>
     </table>
 

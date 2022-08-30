@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Status;
 use App\Entity\Profile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -76,6 +78,15 @@ class ProfileType extends AbstractType
                     "class" => "form-control"
                 ],
                 "required" => false,
+            ])
+
+            ->add('status', EntityType::class,[
+                'class' => Status::class ,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'labelradio'
+                ],
+                'expanded' => true, 
             ])
         ;
     }

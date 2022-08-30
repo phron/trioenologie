@@ -3,12 +3,28 @@
 {% block title %}Modifier le profil{% endblock %}
 
 {% block body %}
-    <h1>Modifier le profil</h1>
+
+<div class="container">
+    <h1 class="mt-2 text-center">Modifier le profil</h1>
+    <div class="row justify-content-center col-6">
     
-    <button class="btn btn-submit" type="submit">Valider</button>
-    {{ include('user/profile/formProfile.html.twig', {'button_label': 'Update'}) }}
+        {{ include('user/profile/formProfile.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('user_profile') }}" class="btn btn-return col-4">Retour au profil</a>
+        <button class="btn btn-submit" type="submit">Valider</button>
 
-    {{ include('user/profile/deleteProfile.html.twig') }}
+    </div>
+        {#  RESET PROFILE #}
+        <button id="btnReset"  class="btn btn-warning my-1" href="{{ path('user_profile_reset', {'id': profile.id})}}" onclick="showDialogBox()" >Réinitialiser le profil</button>
+
+        <a href="{{ path('user_profile') }}" class="btn btn-return col-4">Retour au profil</a>
+
+
+        {# DELETE PROFILE #}
+        {{ include('user/profile/deleteProfile.html.twig') }}
+    
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/askConfirmation.js" ></script>
 {% endblock %}

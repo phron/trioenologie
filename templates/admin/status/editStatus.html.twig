@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le statut{% endblock %}
+
+{% block body %}
+    <h1>Modifier le statut</h1>
+
+    {{ include('admin/status/formStatus.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_status_index') }}">Retour à la liste des statuts</a>
+
+    {{ include('admin/status/deleteStatus.html.twig') }}
+{% endblock %}

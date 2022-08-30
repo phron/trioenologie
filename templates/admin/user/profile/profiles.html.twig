@@ -15,7 +15,8 @@
                 <th>Address2</th>
                 <th>Zipcode</th>
                 <th>City</th>
-                <th>UpdatedAt</th>
+                <th>Date de création</th>
+                <th>Statut</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -30,6 +31,11 @@
                 <td>{{ profile.zipcode }}</td>
                 <td>{{ profile.city }}</td>
                 <td>{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                {% if profile.status %}
+                    <td>{{ profile.status.name }}</td>
+                {% else %}
+                    <td class="fst-italic">Statut non-renseigné</td>
+                {% endif %}
                 <td>
                     <a href="{{ path('admin_profile_show', {'id': profile.id}) }}">show</a>
                     <a href="{{ path('admin_profile_edit', {'id': profile.id}) }}">edit</a>

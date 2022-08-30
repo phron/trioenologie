@@ -1,57 +1,53 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Log in!{% endblock %}
+{% extends "base.html.twig" %}
 
 {% block body %}
-<main class="form-signin">
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<section >
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">     
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
 
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté.e en tant que {{ app.user.userIdentifier }}, <a href="{{ path('logout') }}" class="btn">Se déconnecter</a>
+            <img src="/assets/imagesTrioenologie/trioenologie-trans7.png" alt="Verre de vin de couleur noir et  avec typographie Trioenologie au dessus" class="mb-2 mt-3" width="130" height="130"> 
+
+            <h1 class="sP mb-5">Connexion</h3>
+
+            <form method="post"> 
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="typeEmailX-2">E-mail</label>
+              <input type="email" name="email" value="{{ last_username }}" id="typeEmailX-2" class="form-control form-control-lg" autocomplete="email" required autofocus>
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="typePasswordX-2">Mot de passe</label>
+              <input type="password" name="password" id="typePasswordX-2" class="form-control form-control-lg mb-1">
+              <a href="{{ path('forgot_password_request') }}">Mot de passe oublié ?</a>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="form-check d-flex justify-content-start mb-4">
+            <label>
+                <input type="checkbox" value="remember-me">
+                Se souvenir de moi            
+            </label>
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}">
+            <button class="btn btn-submit btn-lg btn-block mb-2 col-6" type="submit">Se connecter</button>
+            </form>
+
+            <hr class="my-4">
+
+            <h2 class="sP mb-3">Pas encore de compte ?</h2>
+            <a href="{{ path('register') }}" class="btn btn-lg btn-submit col-6">Inscrivez-vous</a>
+
+
+          </div>
         </div>
-    {% endif %}
-    <h1 class="text-center mb-3">Connexion</h1>
-    <div class="row justify-content-center">
-    <div class="form-floating col-lg-5 col-md-5 col-sm-4">
-        <label for="floatingInput">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" class="form-control" id="floatingInput" autocomplete="email" required autofocus>
+      </div>
     </div>
-    </div>
-    <div class="row justify-content-center">
-    <div class="form-floating col-lg-5 col-md-5 col-sm-4">
-        <label for="floatingInput">Mot de passe</label>
-        <input type="password" name="password" class="form-control" id="floatingPassword" autocomplete="current-password" required>
-        <a href="{{ path('forgot_password_request') }}">Mot de passe oublié ?</a>
-    </div>
-    </div>
-
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Se souvenir de moi
-        </label>
-    </div>
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}">
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Se connecter
-    </button>
-</form>
-    <div class="text-center">
-        <p>Pas de compte? <a href="{{ path('register') }}">Inscrivez-vous</a></p>
-    </div>
-</main>
-
-    
-
-    
-
-
-
-   
-
+  </div>
+</section>
 {% endblock %}

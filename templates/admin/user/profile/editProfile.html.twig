@@ -9,5 +9,11 @@
 
     <a href="{{ path('admin_user_index') }}">Retour à la liste des utilisateurs</a>
 
+    <button id="btnReset"  class="btn btn-warning my-1" href="{{ path('profile_reset', {'id': profile.id})}}" onclick="showDialogBox()" >Réinitialiser le profil</button>
+
     {{ include('admin/user/profile/deleteProfile.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/askConfirmation.js" ></script>
 {% endblock %}

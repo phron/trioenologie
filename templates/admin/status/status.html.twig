@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statuts des membres{% endblock %}
+
+{% block body %}
+    <h1>Statuts des membres</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for status in statuses %}
+            <tr>
+                <td>{{ status.id }}</td>
+                <td>{{ status.name }}</td>
+                <td>
+                    <a href="{{ path('admin_status_show', {'id': status.id}) }}">Voir</a>
+                    <a href="{{ path('admin_status_edit', {'id': status.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun résultat.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_status_new') }}">Nouveau statut</a>
+{% endblock %}

@@ -58,7 +58,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/{id}', name: 'profile_delete', methods: ['POST'])]
-    public function delete(Request $request, Profile $profile, ProfileRepository $profileRepository, UserRepository $userRepository): Response
+    public function delete(
+        Request $request, 
+        Profile $profile, 
+        ProfileRepository $profileRepository, 
+        UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$profile->getId(), $request->request->get('_token'))) {
             $user = $profile->getUser(); // On récupère l'utilisateur connecté
@@ -71,4 +75,32 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER); // On redirige vers la page d'accueil dans ce cas précis
     }
+
+
+        // profile_reset : remet tous les champs du profil à vide sauf user et updatedAt    
+        #[Route('/profile/{id}', name: 'profile_reset', methods: ['GET','POST'])]
+        public function reset(
+            Profile $profile, 
+            ProfileRepository $profileRepository): Response
+        {
+            
+            $profile->setLastName("");
+            $profile->setFirstName("");
+            $profile->setPhoneNumber("");
+            $profile->setAddress("");
+            $profile->setAddress2("");
+            $profile->setZipcode("");
+            $profile->setCity("");
+            $profile->setStatus(null);
+            $profile->setUpdatedAt( new \DateTimeImmutable('now'));
+            
+            $profileRepository->add($profile, true);
+    
+    
+            return $this->redirectToRoute('profile_edit', ['id' => $profile->getId()], Response::HTTP_SEE_OTHER);
+            return $this->renderForm('user/profile/editProfile.html.twig', [
+                'profile' => $profile,
+            ]);
+            
+        }
 }
