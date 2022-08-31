@@ -73,7 +73,7 @@ class OccasionType extends AbstractType
             ])
             
             ->add('savedPictures', EntityType::class,[
-                'label' => 'Choisissez parmi les images enregistrées',
+                'label' => 'Images enregistrées',
                 'mapped' => false,
                 'required' => false,
                 'multiple' => true,
@@ -86,7 +86,7 @@ class OccasionType extends AbstractType
             ])
 
             ->add('pictures', FileType::class, [
-                'label' => 'Ajoutez une nouvelle image',
+                'label' => 'Ajouter une image',
                 'multiple' => true,
                 'required' =>false,
                 'mapped' => false

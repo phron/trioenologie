@@ -96,12 +96,12 @@ h3.sP {
 
 .rF {
     font-family: 'Roboto Flex';
-    font-size: 1.325rem;
+    font-size: 1rem;
 }
 
 .rFb {
     font-family: 'Roboto Flex';
-    font-size: 1.325rem;
+    font-size: 1rem;
     font-weight: bold;
 }
 
@@ -112,7 +112,7 @@ h3.sP {
 
 h1.rF {
     font-family: 'Roboto Flex';
-    font-size: 2.5rem;
+    font-size: 1.9rem;
     font-style: italic;
     font-weight: bold;
 }
@@ -294,7 +294,7 @@ td.fc-day-top.fc-mon.fc-today {
     color: #550729;
 }
 
-/* Tableaux */
+/* Tableaux INDEX */
 
 table.tab {
     margin-top: 1rem !important;
@@ -307,6 +307,13 @@ tbody.tab {
 
 thead.tab {
     background-color: #7b0539;
+    color: white;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+th.tab {
+    background-color:#da1d53;
     color: white;
     text-align: center;
     vertical-align: middle !important;
@@ -329,6 +336,22 @@ i.bi {
     font-size: 1.6rem;
 }
 
+i.bi-pencil {
+    color: #eea1aa;
+}
+
+/* FIN TABLEAUX INDEX */
+
+/* Tableaux SHOW */
+
+td.rF {
+    font-family: 'Roboto Flex';
+    font-size: 1rem;
+}
+
+.table {
+    --bs-table-striped-bg: rgba(134, 24, 55, 0.232);
+}
 
 /* PROFIL */
 
