@@ -20,16 +20,20 @@
                 <td>{{ gallery.imgDesc }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Créée le</th>
+                <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>EndAt</th>
-                <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Fin de publication</th>
+                <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>Img</th>
-                <td><img src="{{ asset("uploads/gallery/" ~ gallery.img) }}" alt="" style="width:350px"></td>
+                <th>Image</th>
+                <td>                
+                {% for picture in gallery.pictures %}
+                    <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+                {% endfor %}             
+                </td>
             </tr>
         </tbody>
     </table>

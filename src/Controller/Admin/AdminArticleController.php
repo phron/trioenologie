@@ -125,7 +125,7 @@ class AdminArticleController extends AbstractController
 
         return $this->renderForm('admin/article/editArticle.html.twig', [
             'article' => $article,
-            'form' => $form,
+            'formArticle' => $form,
         ]);
     }
 
@@ -150,7 +150,7 @@ class AdminArticleController extends AbstractController
         
         return $this->renderForm('article/edit.html.twig', [
             'article' => $article,
-            'form' => $form,
+            'formArticle' => $form,
         ]);
 
     }

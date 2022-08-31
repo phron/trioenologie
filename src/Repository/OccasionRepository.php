@@ -39,6 +39,32 @@ class OccasionRepository extends ServiceEntityRepository
         }
     }
 
+
+   /**
+    * @return Occasion[] Returns an array of Occasion objects
+    */
+    public function findByPicture($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.pictures = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id', 'ASC')
+         //    ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+    public function findOneById($value): ?Occasion
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+ 
 //    /**
 //     * @return Occasion[] Returns an array of Occasion objects
 //     */

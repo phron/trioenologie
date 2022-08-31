@@ -25,7 +25,11 @@
                 <td>{{ gallery.imgDesc }}</td>
                 <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i') : '' }}</td>
                 <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i') : '' }}</td>
-                <td><img src="{{ asset("uploads/gallery/" ~ gallery.img) }}" alt="" style="width:350px"></td>
+                <td>                
+                {% for picture in gallery.pictures %}
+                    <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+                {% endfor %}             
+                </td>
                 <td>
                     <a href="{{ path('admin_gallery_show', {'id': gallery.id}) }}">Voir l'image</a>
                     <a href="{{ path('admin_gallery_edit', {'id': gallery.id}) }}">Modifier l'image</a>

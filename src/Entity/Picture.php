@@ -39,10 +39,18 @@ class Picture
     #[ORM\ManyToMany(targetEntity: Carousel::class, mappedBy: 'pictures')]
     private Collection $carousels;
 
+    #[ORM\ManyToMany(targetEntity: Gallery::class, mappedBy: 'pictures')]
+    private Collection $galleries;
+
+    #[ORM\ManyToMany(targetEntity: Occasion::class, mappedBy: 'pictures')]
+    private Collection $occasions;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->carousels = new ArrayCollection();
+        $this->galleries = new ArrayCollection();
+        $this->occasions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,6 +179,60 @@ class Picture
     {
         if ($this->carousels->removeElement($carousel)) {
             $carousel->removePicture($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
+    {
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): self
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries->add($gallery);
+            $gallery->addPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): self
+    {
+        if ($this->galleries->removeElement($gallery)) {
+            $gallery->removePicture($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Occasion>
+     */
+    public function getOccasions(): Collection
+    {
+        return $this->occasions;
+    }
+
+    public function addOccasion(Occasion $occasion): self
+    {
+        if (!$this->occasions->contains($occasion)) {
+            $this->occasions->add($occasion);
+            $occasion->addPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOccasion(Occasion $occasion): self
+    {
+        if ($this->occasions->removeElement($occasion)) {
+            $occasion->removePicture($this);
         }
 
         return $this;

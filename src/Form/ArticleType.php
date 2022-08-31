@@ -18,12 +18,14 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                "label" => "Titre de l'article",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control",
                 ]
             ])
             ->add('intro', TextareaType::class, [
+                "label" => "Introduction",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control",
@@ -31,12 +33,14 @@ class ArticleType extends AbstractType
                 ]
             ])
             ->add('author', TextType::class, [
+                "label" => "Auteur",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control",
                 ]
             ])
             ->add('content', TextareaType::class, [
+                "label" => "Contenu",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control",
@@ -49,7 +53,7 @@ class ArticleType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
                 'class' => Picture::class,
                 'choice_label' => function($picture){                 
                     return $picture->getTitle();
@@ -57,7 +61,7 @@ class ArticleType extends AbstractType
             ])
 
             ->add('pictures', FileType::class, [
-                'label' => false,
+                'label' => 'Ajoutez une nouvelle image',
                 'multiple' => true,
                 'required' =>false,
                 'mapped' => false

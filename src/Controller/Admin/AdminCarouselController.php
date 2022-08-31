@@ -35,44 +35,32 @@ class AdminCarouselController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {  
-            // on récupère les images transmises dans le champ d'upload (pictures)
             $pictures = $form->get('pictures')->getData();
             
-            // on boucle sur les images uploadées
             foreach($pictures as $picture){
-                // on attribue un nom de fichier unique à l'image téléchargée
-                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
                 
-                //on récupère le nom de fichier original de l'image
+                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+                               
                 $name = $picture->getClientOriginalName();
                 
-                // on enregistre l'image dans le répertoire uploads/pictures (image physique)
                 $picture->move(
                     $this->getParameter('pictures_directory'),
                     $nomPict
-                ); // EO move  
-
-                // on enregistre l'image en BDD table Picture (ses infos)
+                ); 
+                
                 $pict = new Picture();
                 $pict->setTitle($name); 
                 $pict->setPictureFile($nomPict);
-
-                // on enregistre l'image dans l'article
+                
                 $carousel -> addPicture($pict);               
-            } // EO foreach $pictures
-
-            // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+            }
+            
             $images =  $form->get('savedPictures')->getData();
             
-            // on boucle sur les images du champ savedPictures 
             foreach($images as $image){
-                // on ajoute chaque image sélectionnée à l'article
+                
                 $carousel -> addPicture($image);
-            }//EO foreach $images
-
-            // On enregistre l'article 
-            // qui va sauvegarder définitivement en bdd les images uploadées et créer les liens dans la table de jointure
-            // grâce au 'cascade:['persist] aj
+            }
 
             $entityManager->persist($carousel);
             $entityManager->flush();

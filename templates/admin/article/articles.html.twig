@@ -3,25 +3,28 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Tous les articles</h1>
+<div class="container mt-4">
+    <h1 class="text-center rF">Tous les articles</h1>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
+    <a href="{{ path('admin_article_new') }}" class="btn btn-submitForm col-sm-2 mt-3">Ecrire un nouvel article</a>
+
+    <table class="table tab">
+        <thead class="tab">
+            <tr class="tab">
                 <th>ID</th>
                 <th>Titre</th>
-                <th>Date de création</th>
+                <th>Crée le</th>
                 <th>Intro</th>
                 <th>Contenu</th>
                 <th>Images</th>
                 <th>Auteur</th>
-                <th>Actions</th>
+                <th>Voir</th>
+                <th>Modifier</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tab">
         {% for article in articles %}
-            <tr>
+            <tr class="tab">
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -29,13 +32,19 @@
                 <td>{{ article.content }}</td>
                 <td>
             {% for picture in article.pictures %}
-                <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="180px">     
+                <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="180px">     
             {% endfor %}
                 </td>
-                <td>{{ article.author }}</td>
+                {% if article.author %}
+                    <td>{{ article.author }}</td>                    
+                {% else %}
+                    <td class="fst-italic">N.R</td>
+                {% endif %}
                 <td>
-                    <a href="{{ path('admin_article_show', {'id': article.id}) }}">Voir l'article</a>
-                    <a href="{{ path('admin_article_edit', {'id': article.id}) }}">Modifier l'article</a>
+                    <a href="{{ path('admin_article_show', {'id': article.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                </td>
+                <td>                
+                    <a href="{{ path('admin_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-square"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -47,8 +56,7 @@
     </table>
 
     <div class="row justify-content-center">
-        <a href="{{ path('admin_article_new') }}" class="btn btn-success col-3">Ecrire un nouvel article</a>
-        <a href="{{ path('admin_article_index') }}" class="btn btn-success col-3">Retour à la liste des articles</a>
+        <a href="{{ path('admin_occasion_new') }}" class="btn btn-return col-2 me-2 mt-3">Dashboard</a>
     </div>
 </div>
 {% endblock %}

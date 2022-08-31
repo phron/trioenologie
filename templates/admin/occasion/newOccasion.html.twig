@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Occasion{% endblock %}
+{% block title %}Nouvel évènement{% endblock %}
 
 {% block body %}
-    <h1>Create new Occasion</h1>
+
+<div class="container">
+
+    <h1 class="text-center mt-3 rF">Ajouter un évènement</h1>
 
     {{ include('admin/occasion/formOccasion.html.twig') }}
-
-    <a href="{{ path('admin_occasion_index') }}">back to list</a>
+    
+</div>
 {% endblock %}

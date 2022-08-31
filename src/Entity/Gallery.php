@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GalleryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,8 +28,13 @@ class Gallery
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $img = null;
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'galleries', cascade:['persist'])]
+    private Collection $pictures;
+
+    public function __construct()
+    {
+        $this->pictures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,15 +89,33 @@ class Gallery
         return $this;
     }
 
-    public function getImg(): ?string
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
     {
-        return $this->img;
+        return $this->pictures;
     }
 
-    public function setImg(string $img): self
+    public function addPicture(Picture $picture): self
     {
-        $this->img = $img;
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+        }
 
         return $this;
     }
+
+    public function removePicture(Picture $picture): self
+    {
+        $this->pictures->removeElement($picture);
+
+        return $this;
+    }
+    
+    public function getSavedPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
 }

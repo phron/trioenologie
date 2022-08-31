@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use DateTimeImmutable;
 use App\Entity\Gallery;
+use App\Entity\Picture;
 use App\Form\GalleryType;
 use App\Repository\GalleryRepository;
+use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,29 +32,45 @@ class AdminGalleryController extends AbstractController
     EntityManagerInterface $entityManager): Response
     {
         $gallery = new Gallery();
-        $form = $this->createForm(GalleryType::class, $gallery, ['add' => true]);
+        $form = $this->createForm(GalleryType::class, $gallery);
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted() && $form->isValid()) {
                         
-            $gallery->setCreatedAt(new DateTimeImmutable('now'));         
-            $imgGallery = $form->get('img')->getData();
-
-
-            if($imgGallery)
-            {
-                $nomImgGallery = date('YmdHis') . "-" . uniqid() . "." . $imgGallery->getClientOriginalExtension();
-
-                $imgGallery->move(
-                    $this->getParameter('gallery_directory'),
-                    $nomImgGallery              );
-
-                $gallery->setImg($nomImgGallery);
+            $gallery->setCreatedAt(new DateTimeImmutable('now'));     
+            $pictures = $form->get('pictures')->getData();
+            
+            foreach($pictures as $picture){
+                
+                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+                               
+                $name = $picture->getClientOriginalName();
+                
+                $picture->move(
+                    $this->getParameter('pictures_directory'),
+                    $nomPict
+                ); 
+                
+                $pict = new Picture();
+                $pict->setTitle($name); 
+                $pict->setPictureFile($nomPict);
+                
+                $gallery -> addPicture($pict);               
             }
+            
+            $images =  $form->get('savedPictures')->getData();
+            
+            foreach($images as $image){
+                
+                $gallery -> addPicture($image);
+            }
+
+
+
 
             $entityManager->persist($gallery);
             $entityManager->flush();
-            $galleryRepository->add($gallery, true);
             $galleryRepository->add($gallery, true);
 
             return $this->redirectToRoute('admin_gallery_index', [], Response::HTTP_SEE_OTHER);
@@ -79,25 +97,19 @@ class AdminGalleryController extends AbstractController
     GalleryRepository $galleryRepository,
     EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(GalleryType::class, $gallery, ['update' => true]);
+        $form = $this->createForm(GalleryType::class, $gallery);
         $form->handleRequest($request);
 
+        // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
+        $images =  $form->get('savedPictures')->getData();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $gallery->setCreatedAt(new DateTimeImmutable('now'));         
-            $imgGallery = $form->get('imgUpdate')->getData();
 
-
-            if($imgGallery)
-            {
-                $nomImgGallery = date('YmdHis') . "-" . uniqid() . "." . $imgGallery->getClientOriginalExtension();
-
-                $imgGallery->move(
-                    $this->getParameter('gallery_directory'),
-                    $nomImgGallery              );
-
-                $gallery->setImg($nomImgGallery);
-            }
+            // on boucle sur les images du champ savedPictures 
+            foreach($images as $image){
+            // on ajoute chaque image sélectionnée à la galerie photo
+            $gallery -> addPicture($image);
+        }    
 
             $entityManager->persist($gallery);
             $entityManager->flush();
@@ -110,6 +122,32 @@ class AdminGalleryController extends AbstractController
             'gallery' => $gallery,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/edit/{gallery_id}/unlinkPicture/{id}', name: 'unlinkPicture', methods: ['GET','DELETE'])]
+    public function unlinkPicture(
+        $article_id, 
+        $id, 
+        Request $request, 
+        GalleryRepository $galleryRepository, 
+        PictureRepository $pictureRepository, 
+        EntityManagerInterface $entityManager ): Response
+    {
+        $gallery = $galleryRepository->find($article_id);
+        $picture = $pictureRepository->find($id);
+        $gallery->removePicture($picture);
+
+        $entityManager->persist($gallery);
+        $entityManager->flush();
+       
+        $form = $this->createForm(GalleryType::class, $gallery);
+        $form->handleRequest($request);
+        
+        return $this->renderForm('admin/gallery/editGallery.html.twig', [
+            'gallery' => $gallery,
+            'form' => $form,
+        ]);
+
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]

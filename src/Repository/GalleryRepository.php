@@ -39,6 +39,31 @@ class GalleryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+    * @return Gallery[] Returns an array of Gallery objects
+    */
+   public function findByPicture($value): array
+   {
+       return $this->createQueryBuilder('g')
+           ->andWhere('g.pictures = :val')
+           ->setParameter('val', $value)
+           ->orderBy('g.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+   
+   public function findOneById($value): ?Gallery
+   {
+       return $this->createQueryBuilder('g')
+           ->andWhere('g.id = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
+
 //    /**
 //     * @return Gallery[] Returns an array of Gallery objects
 //     */

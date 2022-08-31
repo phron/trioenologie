@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OccasionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,14 @@ class Occasion
     #[ORM\ManyToOne(inversedBy: 'occasions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'occasions', cascade:['persist'])]
+    private Collection $pictures;
+
+    public function __construct()
+    {
+        $this->pictures = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -124,6 +134,35 @@ class Occasion
         $this->category = $category;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        $this->pictures->removeElement($picture);
+
+        return $this;
+    }
+
+    public function getSavedPictures(): Collection
+    {
+        return $this->pictures;
     }
 
 }

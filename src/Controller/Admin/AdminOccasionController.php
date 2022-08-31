@@ -2,13 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Picture;
 use App\Entity\Occasion;
 use App\Form\OccasionType;
+use App\Repository\PictureRepository;
 use App\Repository\OccasionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/occasion', name:'admin_occasion_')]
 class AdminOccasionController extends AbstractController
@@ -30,13 +33,43 @@ class AdminOccasionController extends AbstractController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function newOccasion(
         Request $request, 
-        OccasionRepository $occasionRepository): Response
+        OccasionRepository $occasionRepository,
+        EntityManagerInterface $entityManager): Response
     {
         $occasion = new Occasion();
         $form = $this->createForm(OccasionType::class, $occasion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $pictures = $form->get('pictures')->getData();
+            
+            foreach($pictures as $picture){
+                
+                $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+                               
+                $name = $picture->getClientOriginalName();
+                
+                $picture->move(
+                    $this->getParameter('pictures_directory'),
+                    $nomPict
+                ); 
+                
+                $pict = new Picture();
+                $pict->setTitle($name); 
+                $pict->setPictureFile($nomPict);
+                
+                $occasion -> addPicture($pict);               
+            }
+            
+            $images =  $form->get('savedPictures')->getData();
+            
+            foreach($images as $image){
+                
+                $occasion -> addPicture($image);
+            }
+
+            $entityManager->persist($occasion);            
             $occasionRepository->add($occasion, true);
 
             return $this->redirectToRoute('admin_occasion_index', [], Response::HTTP_SEE_OTHER);
@@ -64,8 +97,14 @@ class AdminOccasionController extends AbstractController
     {
         $form = $this->createForm(OccasionType::class, $occasion);
         $form->handleRequest($request);
+        $images = $form->get('savedPictures')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach($images as $image){
+                
+            $occasion -> addPicture($image);
+        }
             $occasionRepository->add($occasion, true);
 
             return $this->redirectToRoute('admin_occasion_index', [], Response::HTTP_SEE_OTHER);
@@ -76,6 +115,32 @@ class AdminOccasionController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/edit/{occasion_id}/unlinkPicture/{id}', name: 'unlinkPicture', methods: ['GET','DELETE'])]
+    public function unlinkPicture(
+        $occasion_id, 
+        $id, 
+        Request $request, 
+        OccasionRepository $occasionRepository, 
+        PictureRepository $pictureRepository, 
+        EntityManagerInterface $entityManager ): Response
+    {
+        $occasion = $occasionRepository->find($occasion_id);
+        $picture = $pictureRepository->find($id);
+        $occasion->removePicture($picture);
+
+        $entityManager->persist($occasion);
+        $entityManager->flush();
+       
+        $form = $this->createForm(OccasionType::class, $occasion);
+        $form->handleRequest($request);
+        
+        return $this->renderForm('article/edit.html.twig', [
+            'article' => $occasion,
+            'form' => $form,
+        ]);
+
+    }    
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(

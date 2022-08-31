@@ -39,6 +39,30 @@ class CarouselRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+    * @return Carousel[] Returns an array of Carousel objects
+    */
+   public function findByPicture($value): array
+   {
+       return $this->createQueryBuilder('c')
+           ->andWhere('c.pictures = :val')
+           ->setParameter('val', $value)
+           ->orderBy('c.id', 'ASC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+   
+   public function findOneById($value): ?Carousel
+   {
+       return $this->createQueryBuilder('c')
+           ->andWhere('c.id = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 //    /**
 //     * @return Carousel[] Returns an array of Carousel objects
 //     */

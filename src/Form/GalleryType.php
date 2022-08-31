@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Gallery;
+use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,39 +35,33 @@ class GalleryType extends AbstractType
             ->add('endAt', DateTimeType::class, [
                 "required" => false,
                 "date_widget" => "single_text"
-            ]);     
+            ])
+            
+            ->add('savedPictures', EntityType::class,[
+                'label' => 'Choisissez parmi les images enregistrées',
+                'mapped' => false,
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'class' => Picture::class,
+                'choice_label' => function($picture){                 
+                    return $picture->getTitle();
+                }
+            ])
 
-            if($options['add'])
-            {
-                $builder->add('img', FileType::class, [
-                    "required" => false,
-                    "attr" => [
-                        'onchange' => "loadFile(event)",
-                        "class" => "form-control"
-                    ]
-                ]);
-            }
-            if($options['update'])
-            {
-                $builder->add('imgUpdate', FileType::class, [
-                    "required" => false,
-                    "mapped" => false, // On va récupérer une propriété qui n'est pas dans l'entity
-                    "attr" => [
-                        'onchange' => "loadFile(event)",
-                        "class" => "form-control"
-                    ]
-                ]);
-            }
-        ;
+            ->add('pictures', FileType::class, [
+                'label' => false,
+                'multiple' => true,
+                'required' =>false,
+                'mapped' => false
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Gallery::class,
-            'add' => false,
-            "update" => false
+            'data_class' => Gallery::class
         ]);
     }
 }

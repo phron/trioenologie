@@ -67,17 +67,9 @@ body {
     height: 100%;
 }
 
-/* Taille des titres */
-
-/* h1 {
-    font-family: 'Square Peg';
-    color: black;
-    font-size: 5.5rem;
-} */
-
 /* Police des elements div */
 
-/* CLASSE POLICE SQUARE PEG */
+/* CLASSES POLICE SQUARE PEG */
 
 .sP {
     font-family: 'Square Peg';
@@ -98,12 +90,34 @@ h3.sP {
     font-size: 2.8rem;
 }
 
+/* FIN CLASSES POLICE SQUARE PEG */
 
+/* CLASSES ROBOTO FLEX */
 
-div {
+.rF {
     font-family: 'Roboto Flex';
-    font-size: 17.5px;
+    font-size: 1.325rem;
 }
+
+.rFb {
+    font-family: 'Roboto Flex';
+    font-size: 1.325rem;
+    font-weight: bold;
+}
+
+.rFi {
+    font-family: 'Roboto Flex';
+    font-style: italic;
+}
+
+h1.rF {
+    font-family: 'Roboto Flex';
+    font-size: 2.5rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* FIN ROBOTO FLEX */
 
 /* FIN BODY */
 
@@ -178,9 +192,8 @@ td.fc-day-top.fc-mon.fc-today {
 
 /* FIN CALENDRIER */
 
-/* FORMULAIRES */
+/* BOUTONS NAVIGATION */
 
-/* Boutons formulaires */
 .btn-primary {
     color: white !important;
     background-color: black;
@@ -209,16 +222,14 @@ td.fc-day-top.fc-mon.fc-today {
     background-color: #550729;
 }
 
+.btn-delete{
+    background-color: rgba(218, 29, 83, 0.4);
+    color: white;    
+}
+
 .btn-delete:hover{
     background-color: #da1d53;
     color: white;
-}
-
-.btn-delete{
-    
-    background-color: rgba(218, 29, 83, 0.4);
-    color: white;    
-
 }
 
 .btn-submitForm{
@@ -231,9 +242,24 @@ td.fc-day-top.fc-mon.fc-today {
     background-color: rgba(59, 99, 59, 0.663);
 }
 
-/* FIN FORMULAIRES */
+.btn-outline-warning:hover{
+    background-color: #f1a38d;
+    border-color: #f1a38d;
+    color: white;
+}
+
+.btn-outline-warning{
+    background-color: rgba(241, 163, 141, 0.550);
+    border: 0px;
+    color: white;
+}
+
+
+/* FIN BOUTONS NAV */
 
 /* DASHBOARD */
+
+/* Boutons dashboard */
 
 .btns{
     margin: 0.3rem;
@@ -258,6 +284,7 @@ td.fc-day-top.fc-mon.fc-today {
     background-color: #eea1aa;
     color:#550729;
 }
+
 .btn-users{
     background-color:#f1a38d;
     color: #550729;
@@ -266,6 +293,42 @@ td.fc-day-top.fc-mon.fc-today {
     background-color: #cd8a78;
     color: #550729;
 }
+
+/* Tableaux */
+
+table.tab {
+    margin-top: 1rem !important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important
+}
+
+tbody.tab {
+    text-align: center;
+}
+
+thead.tab {
+    background-color: #7b0539;
+    color: white;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+tr.tab {
+    vertical-align: middle !important;
+}
+
+tbody.tab tr:hover {
+    background-color: rgba(134, 24, 55, 0.232);
+}
+
+tbody.tab td:hover {
+    background-color: rgba(115, 19, 46, 0.232);
+}
+
+i.bi {
+    color: #550729;
+    font-size: 1.6rem;
+}
+
 
 /* PROFIL */
 
@@ -327,9 +390,13 @@ footer {
 
 /* FIN FOOTER */
 
+/* Carousel */
+
 .carousel {
     width: 400px;
 }
+
+/* Formulaire connexion */
 
 .form-signin{
     padding: 15px;
