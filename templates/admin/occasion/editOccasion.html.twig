@@ -10,6 +10,14 @@
 
     <br>
 
-    {{ include('admin/occasion/deleteOccasion.html.twig') }}
+<form method="post" action="{{ path('admin_occasion_delete', {'id': occasion.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet évènement?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ occasion.id) }}">
+    <div class="row justify-content-center mb-5">
+        <button class="btn btn-delete col-lg-1 col-md-1 col-sm-2 mb-3"><i class="bi bi-trash3-fill"></i></button>
+    </div>
+</form>
+
+
+    {# {{ include('admin/occasion/deleteOccasion.html.twig') }} #}
 </div>    
 {% endblock %}

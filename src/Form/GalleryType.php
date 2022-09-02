@@ -19,12 +19,14 @@ class GalleryType extends AbstractType
     {
         $builder
             ->add('imgTitle', TextType::class, [
+                'label' => "Titre de l'image",
                 "attr" => [
                     "class" => "form-control"
                 ]
             ])
             
             ->add('imgDesc', TextareaType::class, [
+                'label' => "Description de l'image",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control",
@@ -33,8 +35,12 @@ class GalleryType extends AbstractType
             ])
 
             ->add('endAt', DateTimeType::class, [
+                'label' => "Fin de publication",
                 "required" => false,
-                "date_widget" => "single_text"
+                "date_widget" => "single_text",
+                "attr" => [
+                    "class" => "form-control"
+                ]
             ])
             
             ->add('savedPictures', EntityType::class,[
@@ -42,7 +48,9 @@ class GalleryType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'multiple' => true,
-                'expanded' => true,
+                "attr" => [
+                    "class" => "form-control"
+                ],
                 'class' => Picture::class,
                 'choice_label' => function($picture){                 
                     return $picture->getTitle();
@@ -50,10 +58,13 @@ class GalleryType extends AbstractType
             ])
 
             ->add('pictures', FileType::class, [
-                'label' => false,
+                'label' => "Ajoutez une nouvelle image",
                 'multiple' => true,
                 'required' =>false,
-                'mapped' => false
+                'mapped' => false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
             ])
         ;
     }

@@ -3,45 +3,49 @@
 {% block title %}Gallery index{% endblock %}
 
 {% block body %}
-    <h1>Gallery index</h1>
+<div class="container mt-4">
+    <h1 class="text-center rF">Galerie photo</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>ImgTitle</th>
-                <th>ImgDesc</th>
-                <th>CreatedAt</th>
-                <th>EndAt</th>
-                <th>Img</th>
-                <th>actions</th>
+    <a href="{{ path('admin_gallery_new') }}" class="btn btn-submitForm col-sm-2 mt-3">Ajouter une image</a>
+
+    <table class="table tab">
+        <thead class="tab">
+            <tr class="tab">
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Image</th>
+                <th>Détails</th>
+                <th>Modifier</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tab">
         {% for gallery in galleries %}
             <tr>
-                <td>{{ gallery.id }}</td>
+                <td class="rFb">{{ gallery.id }}</td>
                 <td>{{ gallery.imgTitle }}</td>
-                <td>{{ gallery.imgDesc }}</td>
-                <td>{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i') : '' }}</td>
-                <td>{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i') : '' }}</td>
                 <td>                
                 {% for picture in gallery.pictures %}
-                    <img class="shadow-sm p-3 mb-5 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+                    <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
                 {% endfor %}             
                 </td>
                 <td>
-                    <a href="{{ path('admin_gallery_show', {'id': gallery.id}) }}">Voir l'image</a>
-                    <a href="{{ path('admin_gallery_edit', {'id': gallery.id}) }}">Modifier l'image</a>
+                    <a href="{{ path('admin_gallery_show', {'id': gallery.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_gallery_edit', {'id': gallery.id}) }}"><i class="bi bi-pencil-square"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun résultat.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('admin_gallery_new') }}">Create new</a>
+    <div class="row justify-content-center">
+        <a href="{{ path('admin_dashboard') }}" class="btn btn-lg btn-return shadow col-lg-2 col-md-2 col-sm-3 me-2 mt-3 mb-5">Dashboard</a>
+    </div>
+
+</div>
 {% endblock %}

@@ -3,9 +3,12 @@
 {% block title %}Nouvelle image{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une image au carousel</h1>
+
+<div class="container">
+
+    <h1 class="text-center mt-3 rF">Ajouter une image au carousel</h1>
 
     {{ include('admin/carousel/formCarousel.html.twig') }}
-
-    <a href="{{ path('admin_carousel') }}" class="btn btn-return">Retour au carousel</a>
+    
+</div>
 {% endblock %}

@@ -20,7 +20,7 @@ class CarouselType extends AbstractType
             'mapped' => false,
             'required' => false,
             'multiple' => true,
-            'expanded' => true,
+            'expanded' => false,
             'class' => Picture::class,
             'choice_label' => function($picture){                 
                 return $picture->getTitle();
@@ -28,7 +28,7 @@ class CarouselType extends AbstractType
         ])
 
         ->add('pictures', FileType::class, [
-            'label' => false,
+            "label" => "Ajoutez une nouvelle image",
             'multiple' => true,
             'required' =>false,
             'mapped' => false

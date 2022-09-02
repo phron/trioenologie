@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Gallery{% endblock %}
+{% block title %}Nouvelle image{% endblock %}
 
 {% block body %}
-    <h1>Create new Gallery</h1>
+<div class="container">
+
+    <h1 class="text-center mt-3 rF">Ajouter une image</h1>
 
     {{ include('admin/gallery/formGallery.html.twig') }}
 
-    <a href="{{ path('admin_gallery_index') }}">back to list</a>
+</div>
 {% endblock %}

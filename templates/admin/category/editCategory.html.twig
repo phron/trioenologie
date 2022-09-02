@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}Modifier la catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit Category</h1>
+<div class="container">
 
-    {{ include('admin/category/formCategory.html.twig', {'button_label': 'Update'}) }}
+    <h1 class="text-center mt-3 rF">Modifier la catégorie n°{{category.id}}</h1>
 
-    <a href="{{ path('admin_categories') }}">back to list</a>
+    {{ include('admin/category/formCategory.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    {{ include('admin/category/deleteCategory.html.twig') }}
+    <br>
+
+    <form method="post" action="{{ path('admin_category_delete', {'id': category.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cette categorie?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+        <div class="row justify-content-center mb-5">
+            <button class="btn btn-delete col-lg-1 col-md-1 col-sm-2 mb-3"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    </form>
+
+</div>
 {% endblock %}

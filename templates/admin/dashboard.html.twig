@@ -6,21 +6,20 @@
 
 <div class="container">
 
+    <h1 class="mt-3 mb-2 text-center rF">Administration du site</h1>
 
-    <h1 class="mt-3 text-center">Administration du site</h1>
-
-        <div class="row justify-content-center col-lg-12 col-md-8 col-sm-4 mt-3">
-        
-            <a href="{{ path('admin_article_index') }}" class="col-4 text-center btn btns btn-article">Articles</a>
-            <a href="{{ path('admin_occasion_index') }}" class="col-4 text-center btn btns btn-evenements">Evènements</a>
-            <a href="{{ path('admin_gallery_index') }}" class="col-4 text-center btn btns btn-galerie">Galerie photo</a>
-
+        <div class="row justify-content-center col-lg-12 col-md-auto col-sm-auto mt-3 mb-2">
+            <a href="{{ path('admin_carousel') }}" class="col-6 text-center btn btns btn-carousel me-2 shadow">Carousel</a>
+            <a href="{{ path('admin_gallery_index') }}" class="col-6 text-center btn btns btn-galerie shadow">Galerie photo</a>        
         </div>
 
-        <div class="row justify-content-center col-lg-12 col-md-8 col-sm-4">
-            <a href="{{ path('admin_user_index') }}" class="col-4 text-center btn btns btn-users">Utilisateurs</a>
-            <a href="{{ path('admin_categories') }}" class="col-4 text-center btn btns btn-categories">Catégories</a>
-            <a href="{{ path('admin_carousel') }}" class="col-4 text-center btn btns btn-carousel">Carousel</a>
+        <div class="row justify-content-center col-lg-12 col-md-auto col-sm-auto mt-2 mb-2">
+            <a href="{{ path('admin_occasion_index') }}" class="col-6 text-center btn btns btn-evenements me-2 shadow">Evènements</a>
+            <a href="{{ path('admin_categories') }}" class="col-6 text-center btn btns btn-categories shadow">Catégories</a>
+        </div>
+        <div class="row justify-content-center col-lg-12 col-md-auto col-sm-auto mt-2 mb-2">
+            <a href="{{ path('admin_article_index') }}" class="col-6 text-center btn btns btn-article me-2 shadow">Articles</a>
+            <a href="{{ path('admin_user_index') }}" class="col-6 text-center btn btns btn-users shadow">Utilisateurs</a>
         </div>        
 
 </div>
