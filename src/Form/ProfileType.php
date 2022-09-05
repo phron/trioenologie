@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProfileType extends AbstractType
@@ -41,6 +42,19 @@ class ProfileType extends AbstractType
                     ])
                     ],
                 "required" => false,
+            ])
+            ->add('phoneNumber', TelType::class, [
+                'label' => "Téléphone",
+                "required" => false,                
+                "constraints" => [
+                    new Regex([
+                        "pattern" => "/[0-9]{10}/",
+                        "message" => "le téléphone ne doit contenir que 10 chiffres."
+                    ]),
+                    ],
+                "attr" => [
+                    "class" => "form-control"
+                ]
             ])
             ->add('address', TextType::class, [
                 "label" => "Adresse",
@@ -81,6 +95,7 @@ class ProfileType extends AbstractType
             ])
 
             ->add('status', EntityType::class,[
+                "label" => "Statut du membre",
                 'class' => Status::class ,
                 'choice_label' => 'name',
                 'attr' => [

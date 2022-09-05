@@ -3,11 +3,14 @@
 {% block title %}Modifier le statut{% endblock %}
 
 {% block body %}
-    <h1>Modifier le statut</h1>
+<div class="container">
+    <h1 class="text-center mt-4 rF">Modifier le statut: {{status.name}}</h1>
 
-    {{ include('admin/status/formStatus.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/status/formStatus.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('admin_status_index') }}">Retour à la liste des statuts</a>
+    <br>
 
     {{ include('admin/status/deleteStatus.html.twig') }}
+
+</div>
 {% endblock %}

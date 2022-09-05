@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AdminProfileType extends AbstractType
@@ -17,6 +18,7 @@ class AdminProfileType extends AbstractType
     {
         $builder
             ->add('lastName', TextType::class, [
+                "label" => "Nom",
                 "constraints" => [
                     new Regex([
                         "pattern" => "/^[a-z]+$/i",
@@ -29,6 +31,7 @@ class AdminProfileType extends AbstractType
                 ]
             ])
             ->add('firstName', TextType::class, [
+                "label" => "Prénom",
                 "constraints" => [
                     new Regex([
                         "pattern" => "/^[a-z]+$/i",
@@ -40,7 +43,21 @@ class AdminProfileType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
+            ->add('phoneNumber', TelType::class, [
+                "label" => "Téléphone",
+                "required" => false,                
+                "constraints" => [
+                    new Regex([
+                        "pattern" => "/[0-9]{10}/",
+                        "message" => "le téléphone ne doit contenir que 10 chiffres."
+                    ]),
+                    ],
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])
             ->add('address', TextType::class, [
+                "label" => "Adresse postale",
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -48,6 +65,7 @@ class AdminProfileType extends AbstractType
             ])
 
             ->add('address2', TextType::class, [
+                "label" => "Adresse complémentaire",
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -55,6 +73,7 @@ class AdminProfileType extends AbstractType
             ])
 
             ->add('zipcode', TextType::class,[
+                "label" => "Code postal",
                 "required" => false,
                 "constraints" => [
                     new Regex([
@@ -67,6 +86,7 @@ class AdminProfileType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
+                "label" => "Ville",
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -74,6 +94,7 @@ class AdminProfileType extends AbstractType
             ])
 
             ->add('status', EntityType::class,[
+                "label" => "Statut du membre",
                 'class' => Status::class ,
                 'choice_label' => 'name',
                 'attr' => [

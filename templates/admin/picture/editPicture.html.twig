@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Picture{% endblock %}
+{% block title %}Modifier image n°{{picture.id}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Picture</h1>
+<div class="container">
+    <h1 class="text-center mt-3 rF">Modifier les détails de l'image n°{{picture.id}} : </h1>
 
-    {{ include('admin/picture/formPicture.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/picture/form_editPicture.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('admin_picture_index') }}">back to list</a>
+    <br>
 
-    {{ include('admin/picture/deletePicture.html.twig') }}
+    <form method="post" action="{{ path('admin_picture_delete', {'id': picture.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet évènement?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ picture.id) }}">
+        <div class="row justify-content-center mb-5">
+            <button class="btn btn-delete col-lg-1 col-md-1 col-sm-2 mb-3"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    </form>
+</div>
 {% endblock %}

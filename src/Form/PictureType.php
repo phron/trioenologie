@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PictureType extends AbstractType
 {
@@ -33,7 +34,30 @@ class PictureType extends AbstractType
         if($options['edit'])
         {
            $builder
-            ->add('altText') 
+            ->add('altText', TextType::class, [
+                "required" => false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ]) 
+            ->add('legend', TextType::class, [
+                "required" => false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ]) 
+            ->add('height', TextType::class,[
+                "required" => false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ]) 
+            ->add('width', TextType::class, [
+                "required" => false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ]) 
             ;
         }
     }

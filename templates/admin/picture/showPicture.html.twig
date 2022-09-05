@@ -1,46 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Picture{% endblock %}
+{% block title %}Détails image n°{{picture.id}}{% endblock %}
 
 {% block body %}
-    <h1>Picture</h1>
+<div class="container col-lg-12 col-md-10 col-sm-8 mt-5">
 
-    <table class="table">
-        <tbody>
+    <h1 class="text-center rF mt-3 mb-5 mb-3">Image n°{{picture.id}}</h1>
+
+    <table class="table text-center table-borderless table-striped">
+        <tbody class="tab">
             <tr>
-                <th>Id</th>
-                <td>{{ picture.id }}</td>
+                <th class="col-1 rFi">ID</th>
+                <td class="rF">{{ picture.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
-                <td>{{ picture.title }}</td>
+                <th class="col-2 rFi">Titre</th>
+                <td class="rF">{{ picture.title }}</td>
             </tr>
             <tr>
-                <th>AltText</th>
-                <td>{{ picture.altText }}</td>
+                <th class="rFi">ALT image</th>
+                <td class="rF">{{ picture.altText }}</td>
+            </tr>
+            <tr class="tab">
+                <th class="rFi">Image</th>            
+                <td><img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px"></td>     
             </tr>
             <tr>
-                <th>PictureFile</th>
-                <td>{{ picture.pictureFile }}</td>
+                <th class="col-2 rFi">Width</th>
+                <td class="rF">{{ picture.width }}</td>
             </tr>
             <tr>
-                <th>Width</th>
-                <td>{{ picture.width }}</td>
+                <th class="col-2 rFi">Height</th>
+                <td class="rF">{{ picture.height }}</td>
             </tr>
             <tr>
-                <th>Height</th>
-                <td>{{ picture.height }}</td>
-            </tr>
-            <tr>
-                <th>Legend</th>
-                <td>{{ picture.legend }}</td>
+                <th class="rFi">Légende</th>
+                <td class="rF">{{ picture.legend }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('admin_picture_index') }}">back to list</a>
+    <div class="row justify-content-center text-center mt-5 mb-5">
 
-    <a href="{{ path('admin_picture_edit', {'id': picture.id}) }}">edit</a>
+        <div class="col-3 ms-3">
+            <a href="{{ path('admin_picture_index') }}" class="btn btn-return">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+            </a>            
+        </div>
 
-    {{ include('admin/picture/deletePicture.html.twig') }}
+        <div class="col-3">
+            <a href="{{ path('admin_picture_edit', {'id':picture.id}) }}" class="btn btn-update">
+                <i class="bi bi-pencil"></i>
+            </a>
+        </div>
+
+        <div class="col-3 ms-3 me-1">
+            <form method="post" action="{{ path('admin_picture_delete', {'id': picture.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet article?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ picture.id) }}">
+                    <button class="btn btn-delete mb-3"><i class="bi bi-trash3-fill"></i></button>
+            </form>      
+        </div>
+
+    </div>
+</div>
 {% endblock %}

@@ -8,12 +8,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class StatusType extends AbstractType
+class AdminStatusType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                "label" => "Nom du statut",
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])
         ;
     }
 

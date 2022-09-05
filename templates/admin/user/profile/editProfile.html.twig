@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Modifier le profil n°{{profile.id}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Profile</h1>
+<div class="container">
+    <h1 class="text-center mt-4 rF">Modifier le profil de : {{profile.firstName}} {{profile.lastName}}</h1>
 
-    {{ include('admin/user/profile/formProfile.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/user/profile/formProfile.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('admin_user_index') }}">Retour à la liste des utilisateurs</a>
+    <button id="btnReset"  class="btn btn-warning my-1" href="{{ path('admin_profile_reset', {'id': profile.id})}}" onclick="showDialogBox()" >Réinitialiser le profil</button>
 
-    <button id="btnReset"  class="btn btn-warning my-1" href="{{ path('profile_reset', {'id': profile.id})}}" onclick="showDialogBox()" >Réinitialiser le profil</button>
+    <br>
 
     {{ include('admin/user/profile/deleteProfile.html.twig') }}
+
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
