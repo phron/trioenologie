@@ -112,5 +112,12 @@ class MainController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    // Route pour les mentions légales du site 
+    #[Route('/mentions_legales', name:'mentions')]
+    public function mentionsLegales()
+    {
+        return $this->render("main/partials/footer/mentions_legales.html.twig");
+    }
 }
 

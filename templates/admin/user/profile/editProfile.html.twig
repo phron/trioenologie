@@ -5,15 +5,20 @@
 {% block body %}
 <div class="container">
     <h1 class="text-center mt-4 rF">Modifier le profil de : {{profile.firstName}} {{profile.lastName}}</h1>
+    {% include "/main/partials/dialogBox.html.twig" %}
 
     {{ include('admin/user/profile/formProfile.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <button id="btnReset"  class="btn btn-warning my-1" href="{{ path('admin_profile_reset', {'id': profile.id})}}" onclick="showDialogBox()" >Réinitialiser le profil</button>
+    </div>
 
     <br>
 
-    {{ include('admin/user/profile/deleteProfile.html.twig') }}
-
+    <form method="post" action="{{ path('admin_profile_delete', {'id': profile.id}) }}" >
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ profile.id) }}">
+        <div class="row justify-content-center mb-5">
+            <button class="btn btn-delete col-lg-1 col-md-1 col-sm-2 mb-3" id="btnDelete" onclick="showDialogBox()"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    </form>  
 </div>
 
 {% endblock %}

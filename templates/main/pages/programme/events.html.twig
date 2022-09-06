@@ -1,28 +1,43 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Evènements{% endblock %}
+{% block title %}Tous les évènements de l'association Trioenologie{% endblock %}
 
 {% block body %}
 
-<h1 class="text-center">Tous les évènements</h1>
+<div class="container">
 
-    <div class="container">
+    <h1 class="text-center sP mt-3 mb-3">Notre programme</h1>
+
     
-        <section class="row justify-content-between">
+        <section class="row justify-content-center col-lg-12 col-md-12 col-sm-auto">
                 
             {% for occasion in occasions %}
-                <div class="col lg-6 col-md-6 col-sm-4 shadow text-center">
-
+                <div class="col lg-5 col-md-5 col-sm-4 shadow text-center mt-3 mb-3 ms-3 me-3">
                     
-                    <h2>{{ occasion.title }}</h2>
-                    <p>{{ occasion.description }}</p>
-                    <p>{{ occasion.startDate|date('Y-m-d H:i:s') }}</p>
-                    <p>{{ occasion.endDate|date('Y-m-d H:i:s') }}</p>          
+                <h2 class="sP mt-3 mb-3">{{ occasion.title }}</h2>
+                {% for picture in occasion.pictures %}
+                    <div class="surroundPics my-1">
+                        <div class="pics">
+                            <img class="shadow-sm p-3 mb-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="350px" alt"{{picture.altText}}"> 
+                        </div>
+                    </div>        
+                {% endfor %}
+                    <span class="rFb mb-2">Détails de l'évènement</span> 
+                    <p class="mt-2 mb-3 rF">{{ occasion.description }}</p>
+                    <span class="rFb">Début de l'évènement</span>
+                    <p class="mt-2 mb-3"> {{ occasion.startDate|date('d/m/Y H:i') }}</p>
+                    <span class="rFb">Fin de l'évènement</span> 
+                    <p class="mt-2 mb-3">{{ occasion.endDate|date('d/m/Y H:i') }}</p>          
             
                 </div>
             {% endfor %}
-    
-    </div>
+
+        </section>
+
+        <div class="row justify-content-center">    
+            <a href="{{ path('home') }}" class="btn btn-lg btn-return shadow col-lg-2 col-md-2 mt-5 mb-5">Retour à l'accueil</a>
+        </div>
+</div>
 
 
 {% endblock %}

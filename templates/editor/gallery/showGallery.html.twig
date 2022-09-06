@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image n°{{gallery.id}}{% endblock %}
+
+{% block body %}
+<div class="container col-lg-12 col-md-10 col-sm-8 mt-5">
+
+    <h1 class="text-center rF mt-3 mb-5 mb-3">Image n°{{gallery.id}} : {{gallery.imgTitle}}</h1>
+
+
+    <table class="table text-center table-borderless table-striped">
+        <tbody class="tab">
+            <tr>
+                <th class="col-2 rFi">ID</th>
+                <td class="rF">{{ gallery.id }}</td>
+            </tr>
+            <tr>
+                <th class="col-2 rFi">Titre de l'image</th>
+                <td class="rF">{{ gallery.imgTitle }}</td>
+            </tr>
+            <tr>
+                <th class="col-2 rFi">Description de l'image</th>
+                <td class="rF">{{ gallery.imgDesc }}</td>
+            </tr>
+            <tr>
+                <th class="col-2 rFi">Créée le</th>
+                <td class="rF">{{ gallery.createdAt ? gallery.createdAt|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="col-2 rFi">Fin de publication</th>
+                <td class="rF">{{ gallery.endAt ? gallery.endAt|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr class="tab">
+                <th class="col-2 rFi">Image</th>
+                <td class="rF">                
+                {% for picture in gallery.pictures %}
+                    <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+                {% endfor %}             
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row justify-content-center text-center mt-5 mb-5">
+
+        <div class="col-3 ms-3">
+            <a href="{{ path('editor_gallery') }}" class="btn btn-return">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+            </a>            
+        </div>
+
+        <div class="col-3">
+            <a href="{{ path('editor_gallery_edit', {'id':gallery.id}) }}" class="btn btn-update">
+                <i class="bi bi-pencil"></i>
+            </a>
+        </div>
+
+        <div class="col-3 ms-3 me-1">
+            <form method="post" action="{{ path('editor_gallery_delete', {'id': gallery.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet article?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gallery.id) }}">
+                    <button class="btn btn-delete mb-3"><i class="bi bi-trash3-fill"></i></button>
+            </form>      
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

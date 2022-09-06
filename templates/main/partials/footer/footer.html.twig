@@ -2,29 +2,27 @@
 
 </footer> #}
 
-<footer>
+<footer id="footerNav">
     <div class="row">
     
-        <section class="col-4 text-center" width="44%"><img src="/assets/imagesTrioenologie/banniere-trans.png" class="mt-2" width="175px;"alt=""></section>
+        <div class="col-4 text-center">
+        <a href="{{ path('home') }}"><img src="/assets/imagesTrioenologie/banniere-trans.png" class="mt-3 mx-auto imgFooter" alt="Bannière trioenologie, 7 verres de vin de différentes couleurs."></a>
+        </div>
 
 
-        <section class="col-4 text-center" width="33%">    
-            <a href="">
+        <div class="col-4 text-center" width="33%">    
             <ul class="text-center mt-2">
-                <a href="">Mentions légales</a>
-                <a href="">Contact</a>
+                <a href="{{ path('mentions') }}">Mentions légales</a>
+                <a href="{{ path('contact') }}">Contact</a>
                 <p class="text-center"> ©️ Trioenologie - 2022</p>   
             </ul>
-            </a>
-        </section>
+        </div>
 
-        <section class="col-4 text-center" width="33%">
-            <a href="">
-            <ul class="mt-2">
+        <div class="col-4 text-center" width="33%">
+            <ul class="mt-4">
                 <a href=""><i class="bi bi-facebook"></i></a>
             </ul>
-            </a>
-        </section>
+        </div>
     </div>
 </footer>
 

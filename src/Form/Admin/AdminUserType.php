@@ -15,11 +15,13 @@ class AdminUserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                "label" => "E-mail",
                 "attr" => [
                     "class" => "form-control"
                 ]
             ])
             ->add('roles', ChoiceType::class, [
+                "label" => "Rôle de l'utilisateur:",
                 "choices" => [
                     "Administrateur" => "ROLE_ADMIN",
                     "Editeur" => "ROLE_EDITOR",

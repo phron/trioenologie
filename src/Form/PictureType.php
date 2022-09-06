@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PictureType extends AbstractType
 {
@@ -19,40 +20,65 @@ class PictureType extends AbstractType
         {
             $builder
                 ->add('pictureFile', FileType::class,[
+                    "label" => "Image",
                     'required'=>false,
                     'multiple'=>true,
                     'mapped' => false,
                     'attr' => [
-                        // 'onchange'=>'loadFile(event)',
                         'class'=>'form-control'
                     ]
-                
-                ]);
+                ])
+                ->add('title', TextType::class, [
+                    'required' => true, 
+                    "label" => "Titre de l'image",
+                    "attr" => [
+                        "class" => "form-control"
+                    ]
+                ])
+                ->add('altText', TextType::class, [
+                    "label" => "Description",
+                    "required" => true,
+                    "attr" => [
+                        "class" => "form-control"
+                    ]
+                ]) ;
         }
         
         // en édition on ne montre que les champs éditable (altText, width, height, legend)
         if($options['edit'])
         {
            $builder
+            ->add('title', TextType::class, [
+                'required' => true, 
+                "label" => "Titre de l'image",
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])
             ->add('altText', TextType::class, [
+                "label" => "Description",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control"
                 ]
             ]) 
-            ->add('legend', TextType::class, [
+            ->add('legend', TextareaType::class, [
+                "label" => "Légende",
                 "required" => false,
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control",
+                    'rows' => 2,
                 ]
             ]) 
             ->add('height', TextType::class,[
+                "label" => "Hauteur",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control"
                 ]
             ]) 
             ->add('width', TextType::class, [
+                "label" => "Largeur",
                 "required" => false,
                 "attr" => [
                     "class" => "form-control"

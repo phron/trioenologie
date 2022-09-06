@@ -1,4 +1,6 @@
-<form method="post" action="{{ path('editor_article_delete', {'id': article.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet article ? Cette action est irréversible');">
+<form method="post" action="{{ path('editor_article_delete', {'id': article.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ? Cette action est irréversible');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
-    <button class="btn">Supprimer l'article</button>
+    <div class="row justify-content-center mb-5">
+        <button class="btn btn-delete col-lg-1 col-md-1 col-sm-2 mb-3">Supprimer l'article</button>
+    </div>
 </form>

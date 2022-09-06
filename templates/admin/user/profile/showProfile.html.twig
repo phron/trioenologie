@@ -3,42 +3,45 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-    <h1>Profile</h1>
+<div class="container col-lg-12 col-md-10 col-sm-8 mt-5">
 
-    <table class="table">
-        <tbody>
+
+<h1 class="text-center rF mt-3 mb-3">Profil de l'utilisateur {{profile.lastName}}{{profile.firstName}}</h1>
+
+    <table class="table text-center table-borderless table-striped">
+        <tbody class="tab">
             <tr>
-                <th>LastName</th>
-                <td>{{ profile.lastName }}</td>
+                <th class="col-2 rFi">Nom</th>
+                <td class="rF">{{ profile.lastName }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
-                <td>{{ profile.firstName }}</td>
+                <th class="col-2 rFi">Prénom</th>
+                <td class="rF">{{ profile.firstName }}</td>
             </tr>
             <tr>
-                <th>Address</th>
-                <td>{{ profile.address }}</td>
+                <th class="col-2 rFi">Adresse</th>
+                <td class="rF">{{ profile.address }}</td>
             </tr>
             <tr>
-                <th>Address2</th>
-                <td>{{ profile.address2 }}</td>
+                <th class="col-2 rFi">Adresse complémentaire</th>
+                <td class="rF">{{ profile.address2 }}</td>
             </tr>
             <tr>
-                <th>Zipcode</th>
-                <td>{{ profile.zipcode }}</td>
+                <th class="col-2 rFi">Code postal</th>
+                <td class="rF">{{ profile.zipcode }}</td>
             </tr>
             <tr>
-                <th>City</th>
-                <td>{{ profile.city }}</td>
+                <th class="col-2 rFi">Ville</th>
+                <td class="rF">{{ profile.city }}</td>
             </tr>
-            <tr>
-                <th>Date de modification</th>
-                <td>{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i') : '' }}</td>
+            <tr class="tab">
+                <th class="col-2 rFi">Date de modification du profil</th>
+                <td class="rF">{{ profile.updatedAt ? profile.updatedAt|date('Y-m-d H:i') : '' }}</td>
             </tr>
             <tr>            
-                <th>Statut du membre</th>
+                <th class="col-2 rFi">Statut du membre</th>
             {% if profile.status %}
-                <td>{{ profile.status.name }}</td>
+                <td class="rF">{{ profile.status.name }}</td>
             {% else %}  
                 <td class="fst-italic">Statut non-renseigné</td>            
             </tr>
@@ -46,10 +49,29 @@
 
         </tbody>
     </table>
+    
+    <div class="row justify-content-center text-center mt-5 mb-5">
 
-    <a href="{{ path('admin_user_index') }}">Retour à la liste des utilisateurs</a>
+        <div class="col-3 ms-3">
+            <a href="{{ path('admin_user_index') }}" class="btn btn-return">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+            </a>            
+        </div>
 
-    <a href="{{ path('admin_profile_edit', {'id': profile.id}) }}">edit</a>
+        <div class="col-3">
+            <a href="{{ path('admin_profile_edit', {'id':profile.id}) }}" class="btn btn-update">
+                <i class="bi bi-pencil"></i>
+            </a>
+        </div>
 
-    {{ include('admin/user/profile/deleteProfile.html.twig') }}
+        <div class="col-3 ms-3 me-1">
+            <form method="post" action="{{ path('admin_profile_delete', {'id': profile.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet utilisateur?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ profile.id) }}">
+                    <button class="btn btn-delete mb-3"><i class="bi bi-trash3-fill"></i></button>
+            </form>      
+        </div>
+
+    </div>
+
+</div>
 {% endblock %}

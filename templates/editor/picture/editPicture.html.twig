@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier image n°{{picture.id}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-2 rF">Modifier les détails de l'image n°{{picture.id}} : </h1>
+
+    {{ include('editor/picture/form_editPicture.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+</div>
+{% endblock %}

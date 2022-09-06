@@ -25,7 +25,7 @@
     </div>
 
     {# On vérifie si la route est 'edit' #}
-    {% if app.request.attributes.get('_route') == 'admin_gallery_edit' %}       
+    {% if app.request.attributes.get('_route') == 'editor_gallery_edit' %}       
        
         <div class="container" id="illustrations">
             <h2 class="mb-3 rF rFb">Image actuelle :</h2>
@@ -34,7 +34,7 @@
                 <div class="surroundPics my-1">
                     <div class="pics">
                         <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="160px"> 
-                        <a class="btn ms-2 btn-reset"  href="{{ path('admin_gallery_unlinkPicture', {gallery_id: gallery.id ,id: picture.id}) }}" >Détacher</a>
+                        {# <a class="btn ms-2 btn-reset"  href="{{ path('editor_gallery_unlinkPicture', {gallery_id: gallery.id ,id: picture.id}) }}" >Détacher</a> #}
                     </div>
                 </div>        
                 {% endfor %}
@@ -45,7 +45,7 @@
     <br>
 
     <div class="row justify-content-center">
-        <a href="{{ path('admin_gallery_index') }}" class="btn btn-return col-2 me-2">Retour</a>
+        <a href="{{ path('editor_gallery') }}" class="btn btn-return col-2 me-2">Retour</a>
         <button class="btn btn-submitForm col-2 ms-2">{{ button_label|default('Valider') }}</button>
     </div>
 

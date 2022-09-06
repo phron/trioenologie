@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'image{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-3 rF">Modifier l'image n°{{gallery.id}} : {{gallery.imgTitle}}</h1>
+
+    {{ include('editor/gallery/formGallery.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <br>
+
+<form method="post" action="{{ path('editor_gallery_delete', {'id': gallery.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet article?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gallery.id) }}">
+    <div class="row justify-content-center mb-5">
+        <button class="btn btn-delete mb-3 col-lg-1 col-md-1 col-sm-2 "><i class="bi bi-trash3-fill"></i></button>
+    </div>
+</form>
+</div>
+{% endblock %}

@@ -6,12 +6,20 @@
 
 <div class="container">
 
-    <h1 class="text-center welcomeSize">Bienvenue <span class="welcome">{{ app.user.email }}</span></h1>
+    <h1 class="mt-5 mb-2 text-center rF">Administration du site</h1>
+    <h2 class="text-center rFi mb-5">Bienvenue {{ app.user.email }}</h2>
 
-    <div class="row justify-content-center mt-3">
+    <div class="row justify-content-center col-lg-12 col-md-auto col-sm-auto mt-3">
 
-        <a href="{{ path('editor_articles') }}" class="btn btn-primary articlesDash col-lg-6 col-md-6 col-sm-4">Articles</a>        
-        <a href="{{ path('editor_gallery') }}" class="btn btn-primary col-lg-6 col-md-6 col-sm-4">Galerie photo</a>
+        <a href="{{ path('editor_articles') }}" class="btn btns btn-article text-center shadow col-lg-6 col-md-6 col-sm-4 mb-2">Articles</a>        
+        <a href="{{ path('editor_gallery') }}" class="btn btns btn-galerie text-center shadow col-lg-6 col-md-6 col-sm-4 mb-2">Galerie photo</a>
+
+    </div>
+
+    <div class="row justify-content-center col-lg-12 col-md-auto col-sm-auto mt-2 mb-2">
+
+        <a href="{{ path('editor_carousel') }}" class="btn btns btn-carousel text-center shadow col-lg-6 col-md-6 col-sm-4 mb-2">Carousel</a>
+        <a href="{{ path('editor_pictures') }}" class="btn btns btn-evenements text-center shadow col-lg-6 col-md-6 col-sm-4 mb-5">Banque d'images</a>
     
     </div>
 

@@ -3,24 +3,49 @@
 {% block title %}Carousel{% endblock %}
 
 {% block body %}
-    <h1>Carousel n°{{ carousel.id }}</h1>
+<div class="container col-lg-12 col-md-10 col-sm-8 mt-5">
 
-    <table class="table">
-        <tbody>
+    <h1 class="text-center mt-3 mb-5 rF">Carousel n°{{ carousel.id }}</h1>
+
+    <table class="table text-center table-borderless table-striped">
+        <tbody class="tab">
             <tr>
-                <th>ID de l'image</th>
+                <th class="col-2 rFi">ID</th>
                 <td>{{ carousel.id }}</td>
             </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{ asset("uploads/carousel/" ~ carousel.img) }}" alt="" style="width:350px"></td>
+            <tr class="tab">
+                <th class="col-2 rFi">Image</th>
+                <td>
+                {% for picture in carousel.pictures %}
+                    <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="180px">     
+                {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('editor_carousel') }}">Retour au carousel</a>
+    <div class="row justify-content-center text-center mt-3 mb-5">
 
-    <a href="{{ path('editor_carousel_edit', {'id': carousel.id}) }}">Modifier l'image</a>
+        <div class="col-3 ms-3">
+        <a href="{{ path('editor_carousel') }}" class="btn btn-return">
+            <i class="bi bi-arrow-left-circle-fill"></i>
+        </a>            
+        </div>
 
-    {{ include('editor/carousel/deleteCarousel.html.twig') }}
+        <div class="col-3">
+        <a href="{{ path('editor_carousel_edit', {'id': carousel.id}) }}" class="btn btn-update">
+            <i class="bi bi-pencil"></i>
+        </a>
+        </div>
+
+        <div class="col-3 ms-3 me-1">
+        <form method="post" action="{{ path('editor_carousel_delete', {'id': carousel.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette image du carousel?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ carousel.id) }}">
+                <button class="btn btn-delete mb-3"><i class="bi bi-trash3-fill"></i></button>
+        </form>
+        </div>
+
+    </div>
+
+</div>
 {% endblock %}

@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modifier l'utilisateur n° {{user.id}} {{user.email}}{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+<div class="container">
+    <h1 class="text-center mt-4 rF">Modifier l'utilisateur n° {{user.id}} {{user.email}}</h1>
 
     {{ include('admin/user/formUser.html.twig', {'button_label': 'Mettre à jour'}) }}
-
-    <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
-
-    {{ include('admin/user/deleteUser.html.twig') }}
+</div>
 {% endblock %}

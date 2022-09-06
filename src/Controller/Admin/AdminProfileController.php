@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use DateTimeImmutable;
 use App\Entity\Profile;
 use App\Repository\UserRepository;
 use App\Form\Admin\AdminProfileType;
@@ -9,8 +10,6 @@ use App\Repository\ProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/profile', name:'admin_profile_')]
@@ -42,6 +41,7 @@ class AdminProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profile->setUpdatedAt(new DateTimeImmutable('now'));         
             $profileRepository->add($profile, true);
 
             return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
@@ -70,31 +70,4 @@ class AdminProfileController extends AbstractController
         return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
-        // profile_reset : remet tous les champs du profil à vide sauf user et updatedAt    
-        #[Route('/{id}', name: 'reset', methods: ['GET','POST'])]
-        public function resetProfile(
-            Profile $profile, 
-            ProfileRepository $profileRepository): Response
-        {
-            
-            $profile->setLastName("");
-            $profile->setFirstName("");
-            $profile->setPhoneNumber("");
-            $profile->setAddress("");
-            $profile->setAddress2("");
-            $profile->setZipcode("");
-            $profile->setCity("");
-            $profile->setStatus(null);
-            $profile->setUpdatedAt( new \DateTimeImmutable('now'));
-            
-            $profileRepository->add($profile, true);
-    
-    
-            return $this->redirectToRoute('admin_profile_edit', ['id' => $profile->getId()], Response::HTTP_SEE_OTHER);
-            return $this->renderForm('admin/user/profile/editProfile.html.twig', [
-                'profile' => $profile,
-            ]);
-            
-        }
 }

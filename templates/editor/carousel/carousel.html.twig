@@ -3,33 +3,51 @@
 {% block title %}Carousel Trioenologie{% endblock %}
 
 {% block body %}
-    <h1>Carousel</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
+<div class="container mt-4 col-md-10 mb-2">
+
+    <section>
+        <h1 class="text-center rF">Carousel</h1>
+        <a href="{{ path('editor_carousel_new') }}" class="btn btn-submitForm shadow col-sm-auto mt-3">Nouvelle image</a>
+    </section>
+
+    <table class="table tab">
+        <thead class="tab">
+            <tr class="tab">
                 <th>ID</th>
-                <th>Img</th>
-                <th>actions</th>
+                <th>Image</th>
+                <th>Détails</th>
+                <th>Modifier</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tab">
         {% for carousel in carousels %}
-            <tr>
-                <td>{{ carousel.id }}</td>
-                <td><img src="{{ asset("uploads/carousel/" ~ carousel.img) }}" alt="" style="width:350px"></td>
-                <td>
-                    <a href="{{ path('editor_carousel_show', {'id': carousel.id}) }}">show</a>
-                    <a href="{{ path('editor_carousel_edit', {'id': carousel.id}) }}">edit</a>
+            <tr class="tab">
+                <td class="rFb col-2">{{ carousel.id }}</td>
+                <td class="col-6">
+                {% for picture in carousel.pictures %}
+                    <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+                {% endfor %}
+                </td>
+                <td class="col-1">
+                    <a href="{{ path('editor_carousel_show', {'id': carousel.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                </td>
+                <td class="col-1">
+                    <a href="{{ path('editor_carousel_edit', {'id': carousel.id}) }}"><i class="bi bi-pencil-square"></i></a>
                 </td>
             </tr>
         {% else %}
-            <tr>
+            <tr class="tab">
                 <td colspan="3">Pas de résultats</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('editor_carousel_new') }}">Nouvelle image</a>
+    <div class="row justify-content-center">
+        <a href="{{ path('editor_dashboard') }}" class="btn btn-lg btn-return shadow col-lg-2 col-md-2 col-sm-3 me-2 mt-3 mb-5">Dashboard</a>
+    </div>
+
+</div>
+
 {% endblock %}

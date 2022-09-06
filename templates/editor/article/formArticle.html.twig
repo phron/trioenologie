@@ -1,4 +1,48 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<section class="mt-3 text-center">
+{{ form_start(formArticle) }}
+
+    <div class="row justify-content-center text-center rFb">
+    
+        <div class="col-6 mt-2">            
+            {{ form_row(formArticle.title)}}            
+        </div>
+        <div class="col-10 mt-2">            
+            {{ form_row(formArticle.intro)}}            
+        </div>        
+        <div class="col-10 mt-2">            
+            {{ form_row(formArticle.content)}}            
+        </div>
+        <div class="col-7 mt-2">            
+            {{ form_row(formArticle.pictures)}}            
+        </div>           
+        <div class="col-7 mt-2">            
+            {{ form_row(formArticle.savedPictures)}}            
+        </div>         
+        <div class="col-6 mt-2">            
+            {{ form_row(formArticle.author)}}            
+        </div>
+
+    {# On vérifie si la route est 'edit' #}
+    {% if app.request.attributes.get('_route') == 'editor_article_edit' %}              
+    <div class="container" id="illustrations">
+        <h2 class="mb-3 rF rFb">Images</h2>
+        <section class="row ">
+            {% for picture in article.pictures %}
+            <div class="surroundPics my-1">
+                <div class="pics">
+                    <img class="shadow-sm p-3 mb-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="165px"> 
+                    {# <a class="btn ms-2 btn-reset"  href="{{ path('editor_article_unlinkPicture', {article_id: article.id ,id: picture.id}) }}" >Détacher</a> #}
+                </div>
+            </div>        
+            {% endfor %}
+        </section> 
+    </div>
+    {% endif %} 
+
+    <div class="row justify-content-center">
+        <a href="{{ path('editor_articles') }}" class="btn btn-return col-2 me-2">Retour</a>
+        <button class="btn btn-submitForm col-2 ms-2">{{ button_label|default('Valider') }}</button>
+    </div>
+
+{{ form_end(formArticle) }}
+</section>

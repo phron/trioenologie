@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use App\Entity\Profile;
 use App\Form\ProfileType;
 use App\Repository\UserRepository;
@@ -36,6 +37,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profile->setUpdatedAt(new DateTimeImmutable('now'));         
             $profileRepository->add($profile, true);
 
             return $this->redirectToRoute('user_profile', [], Response::HTTP_SEE_OTHER);
@@ -97,7 +99,7 @@ class UserController extends AbstractController
             $profileRepository->add($profile, true);
     
     
-            return $this->redirectToRoute('profile_edit', ['id' => $profile->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_profile_edit', ['id' => $profile->getId()], Response::HTTP_SEE_OTHER);
             return $this->renderForm('user/profile/editProfile.html.twig', [
                 'profile' => $profile,
             ]);

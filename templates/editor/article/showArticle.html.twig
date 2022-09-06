@@ -1,52 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article{% endblock %}
+{% block title %}Article n°{{ article.id }}{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+<div class="container col-lg-12 col-md-10 col-sm-8 mt-5">
 
-    <table class="table">
-        <tbody>
+    <h1 class="text-center rF mt-3 mb-5 mb-3">Article n°{{article.id}} : {{article.title}}</h1>
+
+    <table class="table text-center table-borderless table-striped">
+        <tbody class="tab">
             <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
+                <th class="col-2 rFi">ID</th>
+                <td class="rF">{{ article.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
+                <th class="col-2 rFi">Titre de l'article</th>
+                <td class="rF">{{ article.title }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th class="col-2 rFi">Date de création</th>
+                <td class="rF">{{ article.createdAt ? article.createdAt|date('Y-m-d H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>Intro</th>
-                <td>{{ article.intro }}</td>
+                <th class="col-2 rFi">Introduction</th>
+                <td class="rF">{{ article.intro }}</td>
             </tr>
             <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
+                <th class="col-2 rFi">Contenu</th>
+                <td class="rF">{{ article.content }}</td>
             </tr>
-            <tr>
-                <th>Img</th>
+            <tr class="tab">
+                <th class="col-2 rFi">Images</th>
                 <td>                
-                {% if article.img %}
-                        <img src="{{ asset("uploads/articles/" ~ article.img) }}" alt="" style="width:180px">
-                {% else %}
-                <span class="fst-italic">Pas d'image pour le moment</span>
-                {% endif %}
+            {% for picture in article.pictures %}
+                <img class="shadow-sm p-3 bg-body rounded" src="{{ asset('/uploads/pictures/'~ picture.pictureFile) }}" height="200px">     
+            {% endfor %}             
                 </td>
             </tr>
             <tr>
-                <th>Author</th>
-                <td>{{ article.author }}</td>
+            {% if article.author %}
+                <th class="col-2 rFi">Auteur</th>
+                <td class="rF">{{ article.author }}</td>
+            {% else %}
+                <th class="col-2 rFi">Auteur</th>
+                <td class="rFi rFb">Non-renseigné</td>
+            {% endif %}
+
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('editor_article_index') }}">back to list</a>
 
-    <a href="{{ path('editor_article_edit', {'id': article.id}) }}">edit</a>
+    <div class="row justify-content-center text-center mt-5 mb-5">
 
-    {{ include('editor/article/deleteArticle.html.twig') }}
+        <div class="col-3 ms-3">
+            <a href="{{ path('editor_articles') }}" class="btn btn-return">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+            </a>            
+        </div>
+
+        <div class="col-3">
+            <a href="{{ path('editor_article_edit', {'id':article.id}) }}" class="btn btn-update">
+                <i class="bi bi-pencil"></i>
+            </a>
+        </div>
+
+        <div class="col-3 ms-3 me-1">
+            <form method="post" action="{{ path('editor_article_delete', {'id': article.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de vouloir supprimer cet article?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    <button class="btn btn-delete mb-3"><i class="bi bi-trash3-fill"></i></button>
+            </form>      
+        </div>
+
+    </div>
+
+</div>
 {% endblock %}
