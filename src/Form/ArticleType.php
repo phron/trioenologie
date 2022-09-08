@@ -61,7 +61,7 @@ class ArticleType extends AbstractType
             ])
 
             ->add('pictures', FileType::class, [
-                'label' => 'Ajoutez une nouvelle image',
+                'label' => 'Ajoutez une ou plusieurs nouvelle(s) image(s)',
                 'multiple' => true,
                 'required' =>false,
                 'mapped' => false

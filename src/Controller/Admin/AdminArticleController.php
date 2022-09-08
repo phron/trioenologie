@@ -105,6 +105,33 @@ class AdminArticleController extends AbstractController
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+        // on récupère les images transmises dans le champ d'upload (pictures)
+        $pictures = $form->get('pictures')->getData();
+        
+        if($pictures){
+        // on boucle sur les images uploadées
+        foreach($pictures as $picture){
+            // on attribue un nom de fichier unique à l'image téléchargée
+            $nomPict = date('YmdHis') . "-" . uniqid() . "." . $picture->getClientOriginalExtension();
+            
+            //on récupère le nom de fichier original de l'image
+            $name = $picture->getClientOriginalName();
+            
+            // on enregistre l'image dans le répertoire uploads/pictures (image physique)
+            $picture->move(
+                $this->getParameter('pictures_directory'),
+                $nomPict
+            ); // EO move  
+
+            // on enregistre l'image en BDD table Picture (ses infos)
+            $pict = new Picture();
+            $pict->setTitle($name); 
+            $pict->setPictureFile($nomPict);
+
+            // on enregistre l'image dans l'article
+            $article -> addPicture($pict);               
+        } // EO foreach $pictures
+    } // EO if $pictures
 
         // on récupère les images sélectionnées dans le champ savedPictures (les images issues de la bdd)
         $images =  $form->get('savedPictures')->getData();
@@ -129,7 +156,7 @@ class AdminArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{article_id}/unlinkPicture/{id}', name: 'unlinkPicture', methods: ['GET','DELETE'])]
+    #[Route('/edit/{article_id}/unlinkPicture/{id}', name: 'unlinkPicture', methods: ['GET','POST','DELETE'])]
     public function unlinkPicture(
         $article_id, 
         $id, 
@@ -139,18 +166,24 @@ class AdminArticleController extends AbstractController
         EntityManagerInterface $entityManager ): Response
     {
         $article = $articleRepository->find($article_id);
-        $picture = $pictureRepository->find($id);
+        $picture = $pictureRepository->find($id);        
         $article->removePicture($picture);
 
+       
         $entityManager->persist($article);
         $entityManager->flush();
-       
+      
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+
+        $pictures = $article->getPictures();
+       
         
-        return $this->renderForm('article/edit.html.twig', [
+        return $this->renderForm('admin/article/editArticle.html.twig', [
             'article' => $article,
             'formArticle' => $form,
+            'pictures' => $pictures
         ]);
 
     }
